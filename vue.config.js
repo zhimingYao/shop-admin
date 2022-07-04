@@ -37,7 +37,15 @@ module.exports = {
       errors: true
     },
     before: require('./mock/mock-server.js'),
-    // Proxy:{}
+    proxy:{
+      "/":{
+        target:"http://192.168.205.195:3000/",
+        changeOrigin:true,
+        pathRewrite:{
+          "^/":''
+        }
+      }
+    }
   },
 
   // 这里写webpack 官网中的源码配置，loader  pulings ..

@@ -67,22 +67,22 @@ export const constantRoutes = [
         component: () => import('@/views/oms/order/index'),
         meta: { title: '订单列表', icon: 'product-list' }
       },
-      // {
-      //   path: 'orderDetail/:order_id/:status',
-      //   name: 'orderDetail',
-      //   component: () => import('@/views/oms/order/orderDetail'),
-      //   meta: { title: '订单详情' },
-      //   props: true,
-      //   hidden: true
-      // },
-      // {
-      //   path: 'deliverOrderList/:order_id',
-      //   name: 'deliverOrderList',
-      //   component: () => import('@/views/oms/order/deliverOrderList'),
-      //   meta: { title: '发货列表' },
-      //   hidden: true,
-      //   props: true
-      // },
+      {
+        path: 'orderDetail/:order_id/:status',
+        name: 'orderDetail',
+        component: () => import('@/views/oms/order/orderDetail'),
+        meta: { title: '订单详情' },
+        props: true,
+        hidden: true
+      },
+      {
+        path: 'deliverOrderList/:order_id',
+        name: 'deliverOrderList',
+        component: () => import('@/views/oms/order/deliverOrderList'),
+        meta: { title: '发货列表' },
+        hidden: true,
+        props: true
+      },
       {
         path: 'returnApply',
         name: 'returnApply',
