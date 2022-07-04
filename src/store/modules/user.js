@@ -1,9 +1,11 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getcookie,setcookie,removecookie } from "@/utils/cookie-storage";
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
+    id:getcookie('id'),
     token: getToken(),
     name: '',
     avatar: '',
@@ -28,6 +30,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_ID:(state,id)=>{
+    state.id = id
   }
 }
 
@@ -37,11 +42,12 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      login({ name: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
         // token字段 的持久化存储，存储到cookies中
         setToken(data.token)
+        setcookie('id',data.storeInfo.id)
         resolve()
       }).catch(error => {
         reject(error)
@@ -54,15 +60,18 @@ const actions = {
     // 返回 promise
     return new Promise((resolve, reject) => {
       //向服务器发请求，获取用户信息
-      getInfo(state.token).then(response => {
+      console.log(state.id);
+      getInfo({id:state.id}).then(response => {
         const { data } = response
-        console.log(data);
+        // console.log(data);
         if (!data) {
           reject('Verification failed, please Login again.')
         }
 
         // 服务器返回数据中包含 roles（角色）,name（用户名）、avatar(头像)、introduction(自我介绍);
-        const { roles, name, avatar } = data
+        const { role, name, avatar } = data[0]
+
+        const roles = [role==0?"admin":"editor"];
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
@@ -75,7 +84,7 @@ const actions = {
         commit('SET_AVATAR', avatar)
 
         // 修改异步任务的状态为resolved;保存任务的结果数据；
-        resolve(data)
+        resolve(roles)
       }).catch(error => {
          // 修改异步任务的状态为rejected;保存任务的失败原因；
         reject(error)

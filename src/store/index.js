@@ -5,7 +5,11 @@ import app from './modules/app'
 import permission from './modules/permission'
 import settings from './modules/settings'
 import user from './modules/user'
+<<<<<<< HEAD
 import order from './modules/order'
+=======
+import voucher from './modules/voucher.js'
+>>>>>>> master
 
 Vue.use(Vuex)
 
@@ -19,7 +23,23 @@ const store = new Vuex.Store({
     permission,
     settings,
     user,
+<<<<<<< HEAD
     order
+=======
+    voucher,
+    // wjh:{
+    //   state,
+    //   namespaced?,
+    //   mutations,
+    //   actions:{
+    //     // store.dispatch('wjh/a')
+    //     a(){
+    //     }
+    //   },
+    //   getters?,
+    //   modules?
+    // }
+>>>>>>> master
   },
   getters
 })
