@@ -90,10 +90,11 @@ export default {
     },
     deleteVoucher(id) {
       this.$store.dispatch('voucher/deleteVoucher',id).then(res=>{
-        console.log(res);
+        // console.log(res);
         this.getVoucher();
       })
     },
+    
   },
   created() {
     this.getVoucher();
