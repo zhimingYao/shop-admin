@@ -2,12 +2,6 @@
   <div class="editVoucher">
     <div class="form">
       <el-form ref="form" :model="sizeForm" label-width="80px" size="mini">
-        <el-form-item label="商店id">
-          <el-input v-model="sizeForm.store_id"></el-input>
-        </el-form-item>
-        <el-form-item label="产品id">
-          <el-input v-model="sizeForm.spu_id"></el-input>
-        </el-form-item>
         <el-form-item label="优惠劵面额">
           <el-input v-model="sizeForm.deno"></el-input>
         </el-form-item>
@@ -69,19 +63,19 @@ export default {
       //   console.log("submit!", this.sizeForm);
       //   console.log(this.voucherData);
       this.$store
-        .dispatch("voucher/addVoucher", this.voucherData)
+        .dispatch("voucher/editVoucheer", this.voucherData)
         .then((res) => {
           console.log(res);
           if (res.code === 200) {
             this.$message({
               type: "success",
-              message: "添加成功!",
+              message: "修改成功!",
             });
             this.$router.push("/marketing");
           }else{
             this.$message({
               type: "info",
-              message: "添加失败!",
+              message: "修改失败!",
             });
           }
         })
@@ -93,9 +87,8 @@ export default {
   computed: {
     voucherData() {
       let res = {
+        id:this.$route.query.id,
         name: this.sizeForm.name,
-        store_id: this.sizeForm.store_id,
-        spu_id: this.sizeForm.spu_id,
         deno: this.sizeForm.deno,
         condition: this.sizeForm.condition,
         start_time: new Date(this.sizeForm.start_time).getTime(),
@@ -104,6 +97,10 @@ export default {
 
       return res;
     },
+  },
+  created() {
+    this.sizeForm =JSON.parse(getcookie('voucher'))
+    console.log(this.sizeForm);
   },
 };
 </script>

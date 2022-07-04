@@ -50,10 +50,8 @@ const actions = {
             })
         })
     },
-    editVoucheer(store,id){
-        let data = {
-            id,
-        }
+    editVoucheer(store,data){
+        
         return new Promise((resolve, reject) => {
             editVoucheer(data).then(res => {
                 resolve(res)

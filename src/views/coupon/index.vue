@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { setcookie } from "@/utils/cookiestorage.js";
 export default {
   data() {
     return {
@@ -84,9 +85,15 @@ export default {
       this.$router.push(`/marketing/voucherdetail?id=${id}`);
     },
     editVoucheer(voucher) {
-      this.$router.push(`/marketing/editVoucher?id=${id}`)
+      setcookie('voucher', JSON.stringify(voucher))
+      this.$router.push(`/marketing/editVoucher?id=${voucher.id}`)
     },
-    deleteVoucher() {},
+    deleteVoucher(id) {
+      this.$store.dispatch('voucher/deleteVoucher',id).then(res=>{
+        console.log(res);
+        this.getVoucher();
+      })
+    },
   },
   created() {
     this.getVoucher();
