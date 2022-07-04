@@ -5,6 +5,7 @@ import app from './modules/app'
 import permission from './modules/permission'
 import settings from './modules/settings'
 import user from './modules/user'
+import voucher from './modules/voucher.js'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ const store = new Vuex.Store({
     permission,
     settings,
     user,
+    voucher,
     // wjh:{
     //   state,
     //   namespaced?,

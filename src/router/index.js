@@ -93,18 +93,44 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/shopcar',
-    name: 'ShopCar',
+    path: '/marketing',
+    name: 'Marketing',
+    redirect: "/marketing/coupon",
     component: Layout,
     meta:{
-      roles:['editor']
+      title: "营销",
+      icon: 'el-icon-collection-tag',
+      roles:['admin']
     },
     children: [
       {
-        path: 'index', name: 'shopcar', component: () => import('@/views/shopCarList/index'),
-        meta: { title: '购物列表', icon: 'el-icon-shopping-cart-2' }
+        path: 'coupon', 
+        name: 'Coupon', 
+        component: () => import('@/views/coupon/index.vue'),
+        meta: { title: '优惠劵列表', icon: 'el-icon-shopping-cart-2' }
+      },
+      {
+        path: 'secondaction', 
+        name: 'SecondAction', 
+        component: () => import('@/views/secondAction/index.vue'),
+        meta: { title: '秒杀活动列表', icon: 'el-icon-alarm-clock' }
+      },
+      {
+        path: 'voucherdetail', 
+        name: 'VoucherDetail', 
+        component: () => import('@/views/coupon/voucherDetail')
+      },
+      {
+        path: 'addvoucher', 
+        name: 'AddVoucher', 
+        component: () => import('@/views/coupon/addVoucher')
+      },
+      {
+        path: 'editVoucher', 
+        name: 'EditVoucher', 
+        component: () => import('@/views/coupon/editVoucher')
+      },
 
-      }
     ]
 
   },
