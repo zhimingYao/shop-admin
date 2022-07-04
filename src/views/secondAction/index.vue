@@ -6,7 +6,7 @@
         <span>筛选搜索</span>
       </div>
       <div class="search">
-        <el-input placeholder="优惠卷名称" v-model="coupon_name"></el-input>
+        <el-input placeholder="优惠卷名称" v-model="active_name"></el-input>
         <el-button type="primary" size="small">查询搜索</el-button>
       </div>
     </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="list">
         <el-table
-          :data="coupon_Data"
+          :data="active_list"
           border
           style="width: 100%"
           cell-class-name="cell"
@@ -65,7 +65,12 @@
 
 <script>
 export default {
-
+data() {
+  return {
+    active_name:"",
+    active_list:[],
+  }
+},
 }
 </script>
 

@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { getcookie,setcookie,removecookie } from "@/utils/cookie-storage";
+import { getcookie,setcookie,removecookie } from "@/utils/cookiestorage";
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {

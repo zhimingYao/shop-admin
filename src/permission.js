@@ -38,14 +38,11 @@ router.beforeEach(async(to, from, next) => {
         try {
           // 获取用户的角色信息；
           // es6的解构赋值、async\await；store的模块化，命名空间。
-<<<<<<< HEAD
-          const { roles } = await store.dispatch('user/getInfo');
-          // console.log(roles);
-=======
+
           const [roles]  = await store.dispatch('user/getInfo');
 
           console.log(roles);
->>>>>>> master
+
 
           //基于角色生成可访问的路由映射。
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles);
