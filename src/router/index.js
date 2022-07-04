@@ -68,6 +68,66 @@ export const constantRoutes = [
 // asyncRoutes 每个路由配置对象中，都应该需要添加 roles。
 // 如果没有roles 默认，改路由为公共路由，每个人都可以访问
 export const asyncRoutes = [
+  // {
+  //   path: '/shop',
+  //   name: "Shop",
+  //   redirect: "/shop/shoplist",
+  //   component: Layout,
+  //   meta: {
+  //     title: "商品",
+  //     icon: 'el-icon-s-grid',
+  //     roles:['admin']
+  //   },
+  //   children: [
+  //     {
+  //       path: 'shoplist',
+  //       name: 'ShopList',
+  //       component: () => import('@/views/shopList/index'),
+  //       meta: { title: '商品列表', icon: 'el-icon-s-shop' }
+  //     }, {
+  //       path: 'addShop',
+  //       name: 'AddShop',
+  //       component: () => import('@/views/addShop/index'),
+  //       meta: { title: '添加商品', icon: 'el-icon-circle-plus' }
+  //     },
+  //   ]
+  // },
+  // {
+  //   path: '/shopcar',
+  //   name: 'ShopCar',
+  //   component: Layout,
+  //   meta:{
+  //     roles:['editor']
+  //   },
+  //   children: [
+  //     {
+  //       path: 'index', name: 'shopcar', component: () => import('@/views/shopCarList/index'),
+  //       meta: { title: '购物列表', icon: 'el-icon-shopping-cart-2' }
+
+  //     }
+  //   ]
+
+  // },
+  // {
+  //   path: '/user',
+  //   name: 'User',
+  //   redirect: "/user/userList",
+  //   component: Layout,
+  //   meta:{
+  //     roles:['admin']
+  //   },
+  //   children: [
+  //     {
+  //       path: 'userList',
+  //       name: 'UserList',
+  //       component: () => import('@/views/userList/index'),
+  //       meta: {
+  //         title: '用户列表',
+  //         icon: "el-icon-user"
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/shop',
     name: "Shop",
@@ -82,13 +142,23 @@ export const asyncRoutes = [
       {
         path: 'shoplist',
         name: 'ShopList',
-        component: () => import('@/views/shopList/index'),
+        component: () => import('@/views/shop/add-shop/index'),
         meta: { title: '商品列表', icon: 'el-icon-s-shop' }
       }, {
         path: 'addShop',
         name: 'AddShop',
-        component: () => import('@/views/addShop/index'),
+        component: () => import('@/views/shop/add-shop/index'),
         meta: { title: '添加商品', icon: 'el-icon-circle-plus' }
+      },{
+        path: 'shopCategories',
+        name: 'ShopCategories',
+        component: () => import('@/views/addShop/index'),
+        meta: { title: '商品分类', icon: 'el-icon-circle-plus' }
+      },{
+        path: 'brandManagement',
+        name: 'BrandManagement',
+        component: () => import('@/views/addShop/index'),
+        meta: { title: '品牌管理', icon: 'el-icon-circle-plus' }
       },
     ]
   },

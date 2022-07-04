@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { getcookie,setcookie,removecookie } from "@/utils/cookiestorage";
+import { getcookie,setcookie,removecookie } from "@/utils/cookie-storage";
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
@@ -71,7 +71,7 @@ const actions = {
         // 服务器返回数据中包含 roles（角色）,name（用户名）、avatar(头像)、introduction(自我介绍);
         const { role, name, avatar } = data[0]
 
-        const roles = [role==0?"admin":"user"];
+        const roles = [role==0?"admin":"editor"];
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
