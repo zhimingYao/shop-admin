@@ -1,5 +1,6 @@
 import request from '@/utils/http'
 
+// 获取订单商品
 export function getOrder(data) {
     // console.log(data);
     //store_id 店铺id  count 请求的件数  page 请求的页数
@@ -19,6 +20,7 @@ export function getOrderDetail(data) {
     })
 }
 
+// 修改订单信息
 export const updateOrder=(data)=>{
     return service({
         method:"post",
@@ -26,6 +28,8 @@ export const updateOrder=(data)=>{
         data,
     })
 }
+
+// 删除订单信息
 export const deleteOrder=(data)=>{
     return service({
         method:"post",
@@ -33,6 +37,8 @@ export const deleteOrder=(data)=>{
         data
     })
 }
+
+// 
 export const getBackStock=(data)=>{
     return service({
         method:"post",

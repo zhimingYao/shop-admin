@@ -12,11 +12,11 @@
         style="width: 100%; border-radius: 5px"
         empty-text="暂无数据"
       >
-        <el-table-column prop="id" label="编号" width="100">
-        </el-table-column>
+        <el-table-column prop="id" label="编号" width="100"> </el-table-column>
         <el-table-column prop="code" label="订单编号"> </el-table-column>
         <el-table-column prop="create_time" label="提交时间"> </el-table-column>
-        <el-table-column prop="money" label="订单金额" width="150"> </el-table-column>
+        <el-table-column prop="money" label="订单金额" width="150">
+        </el-table-column>
         <el-table-column prop="payment_type" label="支付方式" width="150">
           <template slot-scope="scope">
             <span v-show="scope.row.payment_type == 1">微信</span>
@@ -74,32 +74,52 @@ export default {
   },
   methods: {
     // 获取订单数据
-    getOrder_(){
+    getOrder_() {
       let store_id = 1;
       let count = this.pageSize;
       let page = this.currentPage;
-      let data={store_id,count,page}
-      getOrder(data).then((res)=>{
-        this.tableData=res.data[0]
-        console.log(res.data[0]);
-      }).catch((req)=>{
-        console.log(req);
-      })
+      let data = { store_id, count, page };
+      getOrder(data)
+        .then((res) => {
+          this.tableData = res.data[0];
+          console.log(res.data[0]);
+        })
+        .catch((req) => {
+          console.log(req);
+        });
     },
     // 查看订单
-    handleViewOrder(str){
+    handleViewOrder(str) {
       console.log(str);
     },
     // 订单发货
-    handleDeliverOrder(str){
+    handleDeliverOrder(str) {
       console.log(str);
-      this.$store.dispatch('order/getDeliveList',str)
-      this.$router.push(`deliverOrderList/${str.id}`)
+      this.$store.dispatch("order/getDeliveList", str);
+      this.$router.push(`deliverOrderList/${str.id}`);
     },
     // 删除订单
-    handleDeleteOrder(str){
+    handleDeleteOrder(str) {
       console.log(str);
-    }
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
   },
   created() {
     this.getOrder_();
@@ -117,8 +137,8 @@ export default {
   .order_title {
     box-shadow: none;
     margin-bottom: 20px;
-    span{
-        margin-left: 5px;
+    span {
+      margin-left: 5px;
     }
   }
 }
