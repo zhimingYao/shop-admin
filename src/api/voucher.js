@@ -44,3 +44,12 @@ export function seeVoucheer(data) {
         data
     })
 }
+
+/* 搜索订单信息 */
+export function selectVoucher(data) {
+    return request({
+        url:"/voucher/selectVoucher",
+        method:"post",
+        data
+    })
+}

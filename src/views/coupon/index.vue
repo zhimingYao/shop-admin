@@ -7,7 +7,7 @@
       </div>
       <div class="search">
         <el-input placeholder="优惠卷名称" v-model="coupon_name"></el-input>
-        <el-button type="primary" size="small">查询搜索</el-button>
+        <el-button type="primary" size="small" @click="selectVoucher()">查询搜索</el-button>
       </div>
     </div>
     <div class="data-list">
@@ -94,7 +94,12 @@ export default {
         this.getVoucher();
       })
     },
-    
+    selectVoucher(){
+      this.$store.dispatch('voucher/selectVoucher',this.coupon_name).then(res=>{
+        // console.log(res);
+        this.coupon_Data = res.res
+      })
+    }
   },
   created() {
     this.getVoucher();

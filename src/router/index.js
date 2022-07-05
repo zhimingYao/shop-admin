@@ -50,7 +50,7 @@ export const constantRoutes = [
       path: 'home',
       name: 'Home',
       component: () => import('@/views/home/index'),
-      meta: { title: '首页', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'el-icon-s-home' }
     }]
   },
 
@@ -182,7 +182,7 @@ export const asyncRoutes = [
       {
         path: 'secondaction', 
         name: 'SecondAction', 
-        component: () => import('@/views/secondAction/index.vue'),
+        component: () => import('@/views/spikeCampaign/index.vue'),
         meta: { title: '秒杀活动列表', icon: 'el-icon-alarm-clock' }
       },
       {
