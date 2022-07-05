@@ -33,10 +33,8 @@
 </template>
 
 <script>
-// import { getSubMenu, deleteSubmenu, getStock } from "@/api/product";
-// import { getSecondList, addParent, selectParentNotNull } from "@/api/menu";
-// import { mapGetters } from "vuex";
-// import LogoVue from '../../../layout/components/Sidebar/Logo.vue';
+// import { getSubMenu, , getStock } from "@/api/product";
+import { getSecondList, addParent, selectParentNotNull, deleteSubmenu } from "@/api/menu";
 export default {
   data() {
     return {
@@ -50,20 +48,21 @@ export default {
     };
   },
   created() {
-    // this.getSecondList();
+    this.getSecondList();
   },
   computed: {
-  
+
   },
   methods: {
+    // 点击确定
     addOkHandle() {
       addParent({
-        store_id: this.storeInfo.id,
+        store_id: this.$store.state.user.id,
         category_id: this.category_id
       })
         .then(res => {
           console.log(this.category_id);
-          if (res.data.code == 200) {
+          if (res.code == 200) {
             console.log(res, "插入成功");
             this.dialogVisible = false;
             this.$message({
@@ -83,37 +82,38 @@ export default {
           console.log(err, "插入失败");
         });
     },
+    // 点击添加
     addName() {
       this.dialogVisible = true;
-      console.log(this.parent_name);
+      // console.log(this.parent_name);
       selectParentNotNull({
         parent_name: this.$route.query.parent_name
       }).then(res => {
-        this.addNameArr = res.data.data;
-
-        console.log(this.addNameArr);
+        this.addNameArr = res.data;
+        // console.log(this.addNameArr);
         for (let i = 0; i < this.addNameArr.length; i++) {
           this.name = this.addNameArr[i].name;
           this.category_id = this.addNameArr[i].id;
         }
-        console.log(this.name, this.category_id);
+        // console.log(this.name, this.category_id);
       }).catch(err => {
         console.log(err, '获取失败');
       })
 
     },
-    // getSecondList() {
-    //   getSecondList({
-    //     store_id: this.storeInfo.id,
-    //     parent_name: this.$route.query.parent_name
-    //   }).then(res => {
-    //     this.secondMenu = res.data.data;
-    //     console.log(res, '获取成功');
-    //   }).catch(err => {
-    //     console.log(err, '获取失败');
-    //   })
-
-    // },
+    // 获取列表
+    getSecondList() {
+      getSecondList({
+        store_id: this.$store.state.user.id,
+        parent_name: this.$route.query.parent_name
+      }).then(res => {
+        this.secondMenu = res.data.data;
+        console.log(res, '获取成功');
+      }).catch(err => {
+        console.log(err, '获取失败');
+      })
+    },
+    // 点击表单叉号提示确认关闭
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(_ => {
@@ -121,8 +121,9 @@ export default {
         })
         .catch(_ => { });
     },
+    // 删除
     deleteSecondMenu(index, row) {
-      console.log(row);
+      // console.log(row);
       deleteSubmenu({
         id: row.id,
         parent_name: this.parent_name

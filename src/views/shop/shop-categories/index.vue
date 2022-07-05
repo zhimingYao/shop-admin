@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getMenu, addParent, selectParentNameNUll } from '@/api/menu'
+import { getMenu, addParent, selectParentNameNUll,deleteProduct } from '@/api/menu'
 export default {
   name: 'ShopCategories',
 
@@ -151,9 +151,22 @@ export default {
         console.log(err, '插入失败');
       })
     },
-    deleteProductType(){
-      
-    }
+    deleteProductType(index, row) {
+      this.$confirm("是否要删除该品牌", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        deleteProduct({ id: row.id }).then(res => {
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
+          console.log(row.id, res);
+          location.reload();
+        });
+      });
+    },
   },
   computed: {
 
