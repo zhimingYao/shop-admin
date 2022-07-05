@@ -5,6 +5,9 @@ import app from './modules/app'
 import permission from './modules/permission'
 import settings from './modules/settings'
 import user from './modules/user'
+import order from './modules/order'
+import voucher from './modules/voucher.js'
+import spike from "./modules/spike.js";
 
 Vue.use(Vuex)
 
@@ -18,6 +21,9 @@ const store = new Vuex.Store({
     permission,
     settings,
     user,
+    order,
+    voucher,
+    spike,
     // wjh:{
     //   state,
     //   namespaced?,

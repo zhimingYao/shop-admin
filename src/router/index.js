@@ -45,6 +45,7 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
+<<<<<<< HEAD
     redirect: "/home",
     children: [
       {
@@ -56,6 +57,18 @@ export const constantRoutes = [
     ]
   }
 ];
+=======
+    redirect: '/home',
+    children: [{
+      path: 'home',
+      name: 'Home',
+      component: () => import('@/views/home/index'),
+      meta: { title: '首页', icon: 'el-icon-s-home' }
+    }]
+  },
+
+]
+>>>>>>> master
 
 /**
  * asyncRoutes
@@ -141,6 +154,7 @@ export const asyncRoutes = [
     },
     children: [
       {
+<<<<<<< HEAD
         path: "addShop",
         name: "AddShop",
         component: () => import("@/views/shop/add-shop/index"),
@@ -157,6 +171,27 @@ export const asyncRoutes = [
         name: "ShopCategories",
         component: () => import("@/views/addShop/index"),
         meta: { title: "商品分类", icon: "el-icon-circle-plus" }
+=======
+        path: 'shoplist',
+        name: 'ShopList',
+        component: () => import('@/views/shop/add-shop/index'),
+        meta: { title: '商品列表', icon: 'el-icon-s-shop' }
+      }, {
+        path: 'addShop',
+        name: 'AddShop',
+        component: () => import('@/views/shop/add-shop/index'),
+        meta: { title: '添加商品', icon: 'el-icon-circle-plus' }
+      },{
+        path: 'shopCategories',
+        name: 'ShopCategories',
+        component: () => import('@/views/addShop/index'),
+        meta: { title: '商品分类', icon: 'el-icon-circle-plus' }
+      },{
+        path: 'brandManagement',
+        name: 'BrandManagement',
+        component: () => import('@/views/addShop/index'),
+        meta: { title: '品牌管理', icon: 'el-icon-circle-plus' }
+>>>>>>> master
       },
       {
         path: "brandManagement",
@@ -175,6 +210,7 @@ export const asyncRoutes = [
   },
 
   {
+<<<<<<< HEAD
     path: "/shopcar",
     name: "ShopCar",
     component: Layout,
@@ -188,11 +224,101 @@ export const asyncRoutes = [
         component: () => import("@/views/shopCarList/index"),
         meta: { title: "购物列表", icon: "el-icon-shopping-cart-2" }
       }
+=======
+    path: '/marketing',
+    name: 'Marketing',
+    redirect: "/marketing/coupon",
+    component: Layout,
+    meta:{
+      title: "营销",
+      icon: 'el-icon-collection-tag',
+      roles:['admin']
+    },
+    children: [
+      {
+        path: 'coupon', 
+        name: 'Coupon', 
+        component: () => import('@/views/coupon/index.vue'),
+        meta: { title: '优惠劵列表', icon: 'el-icon-shopping-cart-2' }
+      },
+      {
+        path: 'secondaction', 
+        name: 'SecondAction', 
+        component: () => import('@/views/spikeCampaign/index.vue'),
+        meta: { title: '秒杀活动列表', icon: 'el-icon-alarm-clock' }
+      },
+      {
+        path: 'voucherdetail', 
+        name: 'VoucherDetail', 
+        component: () => import('@/views/coupon/voucherDetail')
+      },
+      {
+        path: 'addvoucher', 
+        name: 'AddVoucher', 
+        component: () => import('@/views/coupon/addVoucher')
+      },
+      {
+        path: 'editVoucher', 
+        name: 'EditVoucher', 
+        component: () => import('@/views/coupon/editVoucher')
+      },
+
+>>>>>>> master
     ]
   },
   {
+<<<<<<< HEAD
     path: "/user",
     name: "User",
+=======
+    path: '/oms',
+    component: Layout,
+    redirect: '/oms/order',
+    name: 'oms',
+    meta: { title: '订单', icon: 'order' },
+    children: [
+      {
+        path: 'order',
+        name: 'order',
+        component: () => import('@/views/oms/order/index'),
+        meta: { title: '订单列表', icon: 'product-list' }
+      },
+      {
+        path: 'orderDetail/:order_id/:status',
+        name: 'orderDetail',
+        component: () => import('@/views/oms/order/orderDetail'),
+        meta: { title: '订单详情' },
+        props: true,
+        hidden: true
+      },
+      {
+        path: 'deliverOrderList/:order_id',
+        name: 'deliverOrderList',
+        component: () => import('@/views/oms/order/deliverOrderList'),
+        meta: { title: '发货列表' },
+        hidden: true,
+        props: true
+      },
+      {
+        path: 'returnApply',
+        name: 'returnApply',
+        component: () => import('@/views/oms/returnApply/index'),
+        meta: { title: '退货申请处理', icon: 'order-return' }
+      },
+      // {
+      //   path: 'returnApplyDetail/:id/:order_id',
+      //   name: 'returnApplyDetail',
+      //   component: () => import('@/views/oms/apply/applyDetail'),
+      //   meta: { title: '退货原因详情' },
+      //   hidden: true,
+      //   props: true
+      // }
+    ]
+  },
+  {
+    path: '/user',
+    name: 'User',
+>>>>>>> master
     redirect: "/user/userList",
     component: Layout,
     meta: {

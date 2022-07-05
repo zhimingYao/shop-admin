@@ -9,6 +9,7 @@ export function getCateGory(data){
       data:data
   })
 }
+<<<<<<< HEAD
 
 // 提交 添加品牌
 export function addBrand(name, image, letter){
@@ -59,3 +60,5 @@ export function deleteSpu(data){
       data,
   })
 }
+=======
+>>>>>>> master
