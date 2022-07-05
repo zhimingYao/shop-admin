@@ -1,6 +1,6 @@
 <template>
   <div class="addSpike">
-    <el-dialog title="添加活动" :visible="isShow" :show-close="false">
+    <el-dialog title="编辑信息" :visible="isShow" :show-close="false">
       <el-form :model="form">
         <el-form-item label="活动名称" :label-width="formLabelWidth">
           <el-input v-model="form.active_name" autocomplete="off"></el-input>
@@ -19,18 +19,13 @@
           </el-time-picker>
         </el-form-item>
         <el-form-item label="活动名称" :label-width="formLabelWidth">
-          <el-time-picker
-            v-model="form.end_time"
-            placeholder="任意时间点"
-          >
+          <el-time-picker v-model="form.end_time" placeholder="任意时间点">
           </el-time-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="oncancle()"> 取 消 </el-button>
-        <el-button type="primary" @click="onsubmit()">
-          确 定
-        </el-button>
+        <el-button type="primary" @click="onsubmit()"> 确 定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -38,49 +33,64 @@
 
 <script>
 export default {
-  name: "addSpike",
+  name: "updataSpike",
   data() {
     return {
       form: {
         active_name: "",
-        spu_id:"",
+        spu_id: "",
         star_time: "",
         end_time: "",
       },
       formLabelWidth: "140px",
     };
   },
-  props:{
-    isShow:{
-      type:Boolean,
-      default:false,
-    }
+  props: {
+    isShow: {
+      type: Boolean,
+      default: false,
+    },
+    spike_item: {
+      type: Object,
+      default: {},
+    },
   },
   methods: {
-    onsubmit(){
-      this.$store.dispatch('spike/addspike',this.spikedata).then(res=>{
-        this.$message({
-          type:"success",
-          message:"添加成功"
-        })
-        this.$emit('showAddSpike',false)
-      })
+    onsubmit() {
+      console.log(this.spikedata);
+      this.$store.dispatch("spike/updatespike", this.spikedata).then((res) => {
+        if (res.code == 200) {
+          this.$message({
+            type: "success",
+            message: "更新成功",
+          });
+          this.$emit("showUpdateSpike", false);
+        }
+      });
     },
-    oncancle(){
-      this.$emit('showAddSpike',false)
-    }
+    oncancle() {
+      this.$emit("showUpdateSpike", false);
+    },
   },
-  computed:{
-    spikedata(){
+  computed: {
+    spikedata() {
       let res = {
+        id: this.form.id,
         active_name: this.form.active_name,
-        spu_id:this.form.spu_id,
+        spu_id: this.form.spu_id,
         star_time: new Date(this.form.star_time).getTime(),
         end_time: new Date(this.form.end_time).getTime(),
+      };
+      return res;
+    },
+  },
+  watch: {
+    isShow(val) {
+      if (val) {
+        this.form = this.spike_item;
       }
-      return res
-    }
-  }
+    },
+  },
 };
 </script>
 
