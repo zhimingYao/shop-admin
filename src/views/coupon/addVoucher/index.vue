@@ -20,27 +20,17 @@
         <div class="time">
           <div class="block">
             <span class="demonstration">开始时间</span>
-            <el-date-picker
-              v-model="sizeForm.start_time"
-              type="datetime"
-              placeholder="选择日期时间"
-            >
+            <el-date-picker v-model="sizeForm.start_time" type="datetime" placeholder="选择日期时间">
             </el-date-picker>
           </div>
           <div class="block">
             <span class="demonstration">结束时间</span>
-            <el-date-picker
-              v-model="sizeForm.end_time"
-              type="datetime"
-              placeholder="选择日期时间"
-            >
+            <el-date-picker v-model="sizeForm.end_time" type="datetime" placeholder="选择日期时间">
             </el-date-picker>
           </div>
         </div>
         <el-form-item size="large">
-          <el-button type="primary" size="small" @click="onSubmit"
-            >立即创建</el-button
-          >
+          <el-button type="primary" size="small" @click="onSubmit">立即创建</el-button>
           <el-button size="small" @click="cancle()">取消</el-button>
         </el-form-item>
       </el-form>
@@ -78,7 +68,7 @@ export default {
               message: "添加成功!",
             });
             this.$router.push("/marketing");
-          }else{
+          } else {
             this.$message({
               type: "info",
               message: "添加失败!",
@@ -86,8 +76,21 @@ export default {
           }
         })
     },
-    cancle(){
-        this.$router.push("/marketing");
+    cancle() {
+      this.$router.push("/marketing");
+    }
+  },
+  created() {
+    if (this.$route.query) {
+      this.sizeForm = {
+        name: "",
+        store_id: "",
+        spu_id: this.$route.query.id,
+        deno: "",
+        condition: "",
+        start_time: "",
+        end_time: "",
+      }
     }
   },
   computed: {
@@ -113,6 +116,7 @@ export default {
   padding: 0;
   margin: 0 auto;
 }
+
 .form {
   width: 700px;
   height: 400px;
@@ -120,6 +124,7 @@ export default {
   padding: 20px;
   border: 1px solid #e4e4e4;
 }
+
 .time {
   display: flex;
   justify-content: space-between;
