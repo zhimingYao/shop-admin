@@ -59,3 +59,21 @@ export function deleteSpu(data){
       data,
   })
 }
+
+/* 查询产品 */
+export function getSpu(data) {
+  return http({
+    url:"/store/getSpu",
+    method:"post",
+    data,
+  })
+}
+
+/* 修改产品价格 */
+export function updataSpu(data) {
+  return http({
+    url:"/store/updataSpu",
+    method:"post",
+    data,
+  })
+}

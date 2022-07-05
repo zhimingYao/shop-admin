@@ -45,10 +45,7 @@ const actions = {
             })
         })
     },
-    selectspike(store,id){
-        let data = {
-            id,
-        }
+    selectspike(store,data){
         return new Promise((resolve, reject) => {
             selectspike(data).then(res => {
                 resolve(res)
@@ -57,10 +54,7 @@ const actions = {
             })
         })
     },
-    updatespike(store,name){
-        let data = {
-            name,
-        }
+    updatespike(store,data){
         return new Promise((resolve, reject) => {
             updatespike(data).then(res => {
                 resolve(res)
