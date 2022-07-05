@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from "@/layout";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -27,39 +27,40 @@ import Layout from '@/layout'
 
 /**
  * constantRoutes : 常量路由; 这个数组中存放的路由，是每一个角色都可以访问的。
- * 
+ *
  */
 export const constantRoutes = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
+    path: "/login",
+    component: () => import("@/views/login/index"),
     hidden: true
   },
 
   {
-    path: '/404',
-    component: () => import('@/views/404'),
+    path: "/404",
+    component: () => import("@/views/404"),
     hidden: true
   },
 
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    redirect: '/home',
-    children: [{
-      path: 'home',
-      name: 'Home',
-      component: () => import('@/views/home/index'),
-      meta: { title: '首页', icon: 'dashboard' }
-    }]
-  },
-
-]
+    redirect: "/home",
+    children: [
+      {
+        path: "home",
+        name: "Home",
+        component: () => import("@/views/home/index"),
+        meta: { title: "首页", icon: "dashboard" }
+      }
+    ]
+  }
+];
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles;
- * 
+ *
  * asyncRoutes:异步路由;这个数组中存放的路由，需要依据用户的角色动态加载。
  * 给路由的meta属性中添加roles(角色)字段,这个字段的取值可以是一个数组，数组中会一一列举哪些角色可以访问这个路由。
  */
@@ -129,98 +130,107 @@ export const asyncRoutes = [
   //   ]
   // },
   {
-    path: '/shop',
+    path: "/shop",
     name: "Shop",
     redirect: "/shop/shoplist",
     component: Layout,
     meta: {
       title: "商品",
-      icon: 'el-icon-s-grid',
-      roles:['admin']
+      icon: "el-icon-s-grid",
+      roles: ["admin"]
     },
     children: [
       {
-        path: 'shoplist',
-        name: 'ShopList',
-        component: () => import('@/views/shop/add-shop/index'),
-        meta: { title: '商品列表', icon: 'el-icon-s-shop' }
-      }, {
-        path: 'addShop',
-        name: 'AddShop',
-        component: () => import('@/views/shop/add-shop/index'),
-        meta: { title: '添加商品', icon: 'el-icon-circle-plus' }
-      },{
-        path: 'shopCategories',
-        name: 'ShopCategories',
-        component: () => import('@/views/addShop/index'),
-        meta: { title: '商品分类', icon: 'el-icon-circle-plus' }
-      },{
-        path: 'brandManagement',
-        name: 'BrandManagement',
-        component: () => import('@/views/addShop/index'),
-        meta: { title: '品牌管理', icon: 'el-icon-circle-plus' }
+        path: "addShop",
+        name: "AddShop",
+        component: () => import("@/views/shop/add-shop/index"),
+        meta: { title: "添加商品", icon: "el-icon-circle-plus" }
       },
-    ]
-  },
-  {
-    path: '/shopcar',
-    name: 'ShopCar',
-    component: Layout,
-    meta:{
-      roles:['editor']
-    },
-    children: [
       {
-        path: 'index', name: 'shopcar', component: () => import('@/views/shopCarList/index'),
-        meta: { title: '购物列表', icon: 'el-icon-shopping-cart-2' }
-
+        path: "shoplist",
+        name: "ShopList",
+        component: () => import("@/views/shop/shop-list/index"),
+        meta: { title: "商品列表", icon: "el-icon-s-shop" }
+      },
+      {
+        path: "shopCategories",
+        name: "ShopCategories",
+        component: () => import("@/views/addShop/index"),
+        meta: { title: "商品分类", icon: "el-icon-circle-plus" }
+      },
+      {
+        path: "brandManagement",
+        name: "BrandManagement",
+        component: () => import("@/views/addShop/index"),
+        meta: { title: "品牌管理", icon: "el-icon-circle-plus" }
+      },
+      {
+        path: "addBrand",
+        name: "AddBrand",
+        component: () => import("@/views/shop/add-brand/index"),
+        hidden: true,
+        meta: { title: "添加品牌" }
       }
     ]
-
   },
+
   {
-    path: '/user',
-    name: 'User',
-    redirect: "/user/userList",
+    path: "/shopcar",
+    name: "ShopCar",
     component: Layout,
-    meta:{
-      roles:['admin']
+    meta: {
+      roles: ["editor"]
     },
     children: [
       {
-        path: 'userList',
-        name: 'UserList',
-        component: () => import('@/views/userList/index'),
+        path: "index",
+        name: "shopcar",
+        component: () => import("@/views/shopCarList/index"),
+        meta: { title: "购物列表", icon: "el-icon-shopping-cart-2" }
+      }
+    ]
+  },
+  {
+    path: "/user",
+    name: "User",
+    redirect: "/user/userList",
+    component: Layout,
+    meta: {
+      roles: ["admin"]
+    },
+    children: [
+      {
+        path: "userList",
+        name: "UserList",
+        component: () => import("@/views/userList/index"),
         meta: {
-          title: '用户列表',
+          title: "用户列表",
           icon: "el-icon-user"
         }
       }
     ]
   },
-  { path: '*', redirect: '/404', hidden: true }
+  { path: "*", redirect: "/404", hidden: true }
+];
 
-]
-
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  });
 
 // 创建路由对象，路由配置只使用constantRoutes,等待用户登录成功后，获取用户的角色,
 // 然后根据角色，生成基于这个角色的路由配置，通过addRoutes的方法添加到router对象上。
-const router = createRouter()
-
+const router = createRouter();
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 
-export default router
-
+export default router;
 
 // export const asyncRoutes = [
 //   {
@@ -312,4 +322,3 @@ export default router
 //   // 404 page must be placed at the end !!!
 //   { path: '*', redirect: '/404', hidden: true }
 // ]
-

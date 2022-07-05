@@ -1,4 +1,4 @@
-'use strict'
+
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 
@@ -39,7 +39,8 @@ module.exports = {
     before: require('./mock/mock-server.js'),
     proxy:{
       "/":{
-        target:"http://192.168.205.195:3000",
+        // target:"http://192.168.205.195:3000",
+        target:"http://192.168.205.83:3000",
         changeOrigin:true,
         pathRewrite:{
           "^/":''
