@@ -60,7 +60,6 @@ export function deleteSpu(data){
   })
 }
 
-<<<<<<< HEAD
 // 根据关键字搜索商品
 export function search(data){
   // console.log(!store_id);
@@ -71,7 +70,6 @@ export function search(data){
   })
 }
 
-=======
 /* 查询产品 */
 export function getSpu(data) {
   return http({
@@ -89,4 +87,3 @@ export function updataSpu(data) {
     data,
   })
 }
->>>>>>> ade89eb3cd296fc6ce9aa5b6b33d1c025c82c1ef

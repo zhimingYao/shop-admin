@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { getCateGory,addBrand } from '@/api/shop.js'
+import { getCateGory, addBrand } from '@/api/shop.js'
 import { uploadImg } from '../uploadImg';
 export default {
   name: 'AddBrand',
@@ -149,9 +149,9 @@ export default {
     handleNext() {
       console.log('提交');
       // console.log(this.form);
-      addBrand(this.form.name,this.form.img.name,this.form.firstLetter).then((res)=>{
+      addBrand(this.form.name, this.form.img.name, this.form.firstLetter).then((res) => {
         console.log(res);
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err);
       })
       this.$router.go(-1)
@@ -159,7 +159,13 @@ export default {
   },
 
   created() {
-
+    if (this.$route.query) {
+      this.form ={
+        name: this.$route.query.name, // 商品名
+        firstLetter: "",
+        img: "",
+      } ;
+    }
   },
 
   mounted() {

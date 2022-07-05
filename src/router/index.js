@@ -161,7 +161,7 @@ export const asyncRoutes = [
       {
         path: "brandManagement",
         name: "BrandManagement",
-        component: () => import("@/views/addShop/index"),
+        component: () => import("@/views/shop/brand-management/index"),
         meta: { title: "品牌管理", icon: "el-icon-circle-plus" },
       },
       {
