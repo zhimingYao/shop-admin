@@ -4,7 +4,6 @@
 
       <el-form-item label="产品分类">
         <el-cascader v-model="productCateOptionsValue" :options="productCateOptions" clearable
-<<<<<<< HEAD
           @change="handleCateChange">
         </el-cascader>
       </el-form-item>
@@ -57,32 +56,8 @@
       </el-form-item>
 
       <el-form-item label="产品售价">
-        <el-input v-model="form.price"></el-input>
-=======
-          @change="handleCateChange"></el-cascader>
-      </el-form-item>
+      <el-input v-model="form.price"></el-input>
 
-      <el-form-item label="产品名称">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-
-      <el-form-item label="产品品牌">
-        <el-select v-model="form.region" placeholder="添加新品牌">
-          <el-option label="区域一" value="shanghai"></el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="产品图片" class="product-img">
-        <div class="product-img-div" @click="uploadImg"><i> + </i></div>
-      </el-form-item>
-
-      <el-form-item label="产品介绍" prop="desc">
-        <el-input type="textarea" placeholder="请输入内容"></el-input>
-      </el-form-item>
-
-      <el-form-item label="产品售价">
-        <el-input v-model="form.name"></el-input>
->>>>>>> master
       </el-form-item>
 
       <el-form-item style="text-align: center">
@@ -93,33 +68,20 @@
 </template>
 
 <script>
-<<<<<<< HEAD
+
 import { getCateGory, addSpu } from '@/api/shop.js'
-=======
-import { getCateGory } from '@/api/shop.js'
->>>>>>> master
+
 export default {
   name: 'AddShop',
 
   data() {
     return {
       form: {
-<<<<<<< HEAD
         name: "", // 商品名
         brandName: "",
         img: '',
         description: "",
         price: "",
-=======
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
->>>>>>> master
       },
       productCateOptionsValue: [],
       productCateOptions: [
@@ -130,13 +92,6 @@ export default {
             {
               value: '1',
               label: 'xiangji'
-<<<<<<< HEAD
-            },
-            {
-              value: '2',
-              label: 'shoubiao'
-=======
->>>>>>> master
             }
           ],
         },
@@ -166,7 +121,6 @@ export default {
           children: [],
         },
       ],
-<<<<<<< HEAD
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
@@ -190,19 +144,13 @@ export default {
     },
     onSubmit() {
       // console.log('submit!');
-=======
-    }
-  },
-  methods: {
-    onSubmit() {
-      console.log('submit!');
->>>>>>> master
+
     },
     uploadImg() {
     },
     // 分类改变时
     handleCateChange() {
-<<<<<<< HEAD
+
       // console.log("改变了分类");
       // console.log(this.productCateOptionsValue);
       let brandArr = this.productCateOptionsValue;
@@ -253,63 +201,27 @@ export default {
 
     handle_success(response, file, fileList) {
       console.log(response, file, fileList);
-=======
-      console.log("改变了分类");
-      console.log(this.selectProductCateValue);
-      let brandArr = this.productCateOptionsValue;
-      console.log(brandArr[1]);
-      // 获取品牌名
-    },
-    // 获取2级分类
-    async getProductCateList() {
-      for (let i = 0; i < this.productCateOptions.length; i++) {
-        let message = { parent_name: "" };
-        message.parent_name = this.productCateOptions[i].label;
-        await getCateGory(message)
-          .then((res) => {
-            console.log(res.data.data, i);
-            let titleName = res.data.data;
-            for (let k = 0; k < titleName.length; k++) {
-              // console.log(titleName[i])
-              this.productCateOptions[i].children.push({
-                value: `${titleName[k].id}`,
-                label: `${titleName[k].name}`,
-              });
-            }
 
-            // console.log(this.productCateOptions)
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
->>>>>>> master
     }
   },
 
   created() {
-<<<<<<< HEAD
     if (this.$route.query) {
       this.form = this.$route.query;
       this.imgCreated = true;
     }
-=======
-    this.getProductCateList()
 
->>>>>>> master
   },
 
   mounted() {
 
   },
-<<<<<<< HEAD
+
   watch: {
 
   }
 }
-=======
-};
->>>>>>> master
+
 </script>
 
 <style lang="scss" scoped>
@@ -329,10 +241,8 @@ export default {
     .product-img-div {
       width: 128px;
       height: 128px;
-<<<<<<< HEAD
-=======
-      border: 1px dashed rgb(160, 159, 159);
->>>>>>> master
+
+
       border-radius: 10px;
 
       i {
@@ -350,13 +260,12 @@ export default {
 
   }
 }
-<<<<<<< HEAD
+
 
 .el-form-item__content {
   width: 800px !important;
   display: flex;
   justify-content: left;
 }
-=======
->>>>>>> master
+
 </style>

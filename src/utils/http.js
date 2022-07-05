@@ -4,14 +4,8 @@ import axios from 'axios'
 // import { getToken } from '@/utils/auth'
 
 const service = axios.create({
-<<<<<<< HEAD
-    // baseURL: process.env.VUE_APP_BASE_API_BIYAO,
-    baseURL: process.env.VUE_APP_BASE_API_YS,
-    timeout: 50000
-=======
     baseURL: process.env.VUE_APP_BASE_API_YZM,
     timeout: 5000
->>>>>>> master
 })
 
 

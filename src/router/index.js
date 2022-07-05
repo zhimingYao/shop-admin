@@ -45,19 +45,6 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
-<<<<<<< HEAD
-    redirect: "/home",
-    children: [
-      {
-        path: "home",
-        name: "Home",
-        component: () => import("@/views/home/index"),
-        meta: { title: "首页", icon: "dashboard" }
-      }
-    ]
-  }
-];
-=======
     redirect: '/home',
     children: [{
       path: 'home',
@@ -68,7 +55,7 @@ export const constantRoutes = [
   },
 
 ]
->>>>>>> master
+
 
 /**
  * asyncRoutes
@@ -154,24 +141,6 @@ export const asyncRoutes = [
     },
     children: [
       {
-<<<<<<< HEAD
-        path: "addShop",
-        name: "AddShop",
-        component: () => import("@/views/shop/add-shop/index"),
-        meta: { title: "添加商品", icon: "el-icon-circle-plus" }
-      },
-      {
-        path: "shoplist",
-        name: "ShopList",
-        component: () => import("@/views/shop/shop-list/index"),
-        meta: { title: "商品列表", icon: "el-icon-s-shop" }
-      },
-      {
-        path: "shopCategories",
-        name: "ShopCategories",
-        component: () => import("@/views/addShop/index"),
-        meta: { title: "商品分类", icon: "el-icon-circle-plus" }
-=======
         path: 'shoplist',
         name: 'ShopList',
         component: () => import('@/views/shop/add-shop/index'),
@@ -191,13 +160,6 @@ export const asyncRoutes = [
         name: 'BrandManagement',
         component: () => import('@/views/addShop/index'),
         meta: { title: '品牌管理', icon: 'el-icon-circle-plus' }
->>>>>>> master
-      },
-      {
-        path: "brandManagement",
-        name: "BrandManagement",
-        component: () => import("@/views/addShop/index"),
-        meta: { title: "品牌管理", icon: "el-icon-circle-plus" }
       },
       {
         path: "addBrand",
@@ -205,26 +167,11 @@ export const asyncRoutes = [
         component: () => import("@/views/shop/add-brand/index"),
         hidden: true,
         meta: { title: "添加品牌" }
-      }
+      },
     ]
   },
 
   {
-<<<<<<< HEAD
-    path: "/shopcar",
-    name: "ShopCar",
-    component: Layout,
-    meta: {
-      roles: ["editor"]
-    },
-    children: [
-      {
-        path: "index",
-        name: "shopcar",
-        component: () => import("@/views/shopCarList/index"),
-        meta: { title: "购物列表", icon: "el-icon-shopping-cart-2" }
-      }
-=======
     path: '/marketing',
     name: 'Marketing',
     redirect: "/marketing/coupon",
@@ -262,15 +209,10 @@ export const asyncRoutes = [
         name: 'EditVoucher', 
         component: () => import('@/views/coupon/editVoucher')
       },
-
->>>>>>> master
     ]
   },
   {
-<<<<<<< HEAD
-    path: "/user",
-    name: "User",
-=======
+
     path: '/oms',
     component: Layout,
     redirect: '/oms/order',
@@ -318,7 +260,6 @@ export const asyncRoutes = [
   {
     path: '/user',
     name: 'User',
->>>>>>> master
     redirect: "/user/userList",
     component: Layout,
     meta: {
