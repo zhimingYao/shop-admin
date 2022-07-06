@@ -81,11 +81,11 @@ export default {
     }
   },
   created() {
-    if (this.$route.query) {
+    if (this.$route.query.spu_id) {
       this.sizeForm = {
         name: "",
         store_id: "",
-        spu_id: this.$route.query.id,
+        spu_id: this.$route.query.spu_id,
         deno: "",
         condition: "",
         start_time: "",
