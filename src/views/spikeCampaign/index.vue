@@ -119,7 +119,7 @@ export default {
     getspike() {
       this.$store.dispatch("spike/getspike").then((res) => {
         // console.log(res);
-        this.active_data = res.res;
+        this.active_data = res.res || [];
       });
     },
     addSpike() {

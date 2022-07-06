@@ -37,7 +37,7 @@
           </el-table-column>
           <el-table-column label="设置" width="280">
             <template slot-scope="scope">
-              <el-button size="mini" @click="getMenu(scope.$index, scope.row)">查看下级</el-button>
+              <el-button size="mini" @click="getMenu(scope.row)">查看下级</el-button>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="280">
@@ -94,12 +94,12 @@ export default {
       this.dialogFormVisible = true;
       // 发请求获取分类
       selectParentNameNUll({
-        parent_name: ''
+        parent_name: '',
       }).then(res => {
         if (res.code == 200) {
           this.addParentNameArr = res.data;
           for (let i = 0; i < this.addParentNameArr.length; i++) {
-            this.category_id = this.addParentNameArr[i].id
+            this.category_id = this.addParentNameArr[i].id || []
           }
         }
       }).catch(err => {
@@ -107,7 +107,7 @@ export default {
       })
     },
     // 获取二级品类
-    getMenu(index, row) {
+    getMenu(row) {
       this.$router.push({
         path: "/shop/productSecondMenu",
         query: {

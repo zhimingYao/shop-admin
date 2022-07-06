@@ -6,7 +6,7 @@
         <span>筛选搜索</span>
       </div>
       <div class="search">
-        <el-input placeholder="优惠卷名称" v-model="coupon_name"></el-input>
+        <el-input placeholder="优惠券名称" v-model="coupon_name"></el-input>
         <el-button type="primary" size="small" @click="selectVoucher()">查询搜索</el-button>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <div class="list">
         <el-table
           :data="coupon_Data"
-          border
+          :border="true"
           style="width: 100%"
           cell-class-name="cell"
         >
@@ -90,7 +90,7 @@ export default {
     },
     deleteVoucher(id) {
       this.$store.dispatch('voucher/deleteVoucher',id).then(res=>{
-        // console.log(res);
+        console.log(res);
         this.getVoucher();
       })
     },

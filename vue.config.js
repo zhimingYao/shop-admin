@@ -39,14 +39,24 @@ module.exports = {
     before: require('./mock/mock-server.js'),
     proxy:{
       "/":{
+<<<<<<< HEAD
         target:"http://192.168.205.195:3000",
         // target:"http://192.168.205.83:3000",
+=======
+<<<<<<< HEAD
+        target:"http://192.168.205.83:3000",
+=======
+        target:"http://192.168.205.195:3000",
+        // target:"http://192.168.205.83:3000",
+>>>>>>> aa8f6e2d2ebe147b9df6586758cba5cef1e078c6
+>>>>>>> 86d81e49d6b2d86a9b5672dba6b684f6324190fc
         changeOrigin:true,
         pathRewrite:{
           "^/":''
         }
       }
     }
+    
   },
 
   // 这里写webpack 官网中的源码配置，loader  pulings ..
