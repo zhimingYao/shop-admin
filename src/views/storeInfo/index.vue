@@ -5,12 +5,12 @@
         <el-form-item label="头像上传">
           <el-upload
             class="avatar-uploader"
-            action="http://192.168.205.195:3000/upload/addimguser"
+            action="http://192.168.205.195:3000/upload/upload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img v-if="(imageUrl||form.avatar)" :src="form.avatar" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
@@ -18,19 +18,19 @@
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="店铺地址">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.address"></el-input>
         </el-form-item>
         <el-form-item label="店铺介绍">
           <el-input type="textarea" v-model="form.desc"></el-input>
         </el-form-item>
         <el-form-item label="联系方式">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.tel"></el-input>
         </el-form-item>
         <el-form-item label="店铺所在区">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.region"></el-input>
         </el-form-item>
         <el-form-item label="店主姓名">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.real_name"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button>取消</el-button>
@@ -42,13 +42,12 @@
 </template>
 
 <script>
+import {getInfo} from "@/api/store.js";
+import { getcookie } from "@/utils/cookiestorage.js";
 export default {
   data() {
     return {
-      form: {
-        name: "",
-        desc: "",
-      },
+      form: {},
       imageUrl: "",
       img_user_url:"",
     };
@@ -59,8 +58,8 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
-      this.img_user_url = res.data.imgsrc;
-      // console.log(this.img_user_url);
+      this.img_user_url = "http://192.168.205.195:3000/"+res.photoPath;
+      // console.log(this.imageUrl,this.img_user_url);
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -74,6 +73,18 @@ export default {
       }
       return isJPG && isLt2M;
     },
+    getInfo(){
+      let data = {
+        id:getcookie('id')
+      }
+      getInfo(data).then(res=>{
+        console.log(res);
+        this.form = res.data[0]
+      })
+    }
+  },
+  created() {
+    this.getInfo()
   },
 };
 </script>
