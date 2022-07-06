@@ -41,7 +41,7 @@ router.beforeEach(async(to, from, next) => {
 
           const [roles]  = await store.dispatch('user/getInfo');
 
-          console.log(roles);
+          // console.log(roles);
 
 
           //基于角色生成可访问的路由映射。

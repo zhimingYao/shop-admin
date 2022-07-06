@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from "@/layout";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -27,39 +27,40 @@ import Layout from '@/layout'
 
 /**
  * constantRoutes : 常量路由; 这个数组中存放的路由，是每一个角色都可以访问的。
- * 
+ *
  */
 export const constantRoutes = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
+    path: "/login",
+    component: () => import("@/views/login/index"),
+    hidden: true,
   },
 
   {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
+    path: "/404",
+    component: () => import("@/views/404"),
+    hidden: true,
   },
 
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    redirect: '/home',
-    children: [{
-      path: 'home',
-      name: 'Home',
-      component: () => import('@/views/home/index'),
-      meta: { title: '首页', icon: 'dashboard' }
-    }]
+    redirect: "/home",
+    children: [
+      {
+        path: "home",
+        name: "Home",
+        component: () => import("@/views/home/index"),
+        meta: { title: "首页", icon: "el-icon-s-home" },
+      },
+    ],
   },
-
-]
+];
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles;
- * 
+ *
  * asyncRoutes:异步路由;这个数组中存放的路由，需要依据用户的角色动态加载。
  * 给路由的meta属性中添加roles(角色)字段,这个字段的取值可以是一个数组，数组中会一一列举哪些角色可以访问这个路由。
  */
@@ -129,115 +130,129 @@ export const asyncRoutes = [
   //   ]
   // },
   {
-    path: '/shop',
+    path: "/shop",
     name: "Shop",
     redirect: "/shop/shoplist",
     component: Layout,
     meta: {
       title: "商品",
-      icon: 'el-icon-s-grid',
-      roles:['admin']
+      icon: "el-icon-s-grid",
+      roles: ["admin"],
     },
     children: [
       {
-        path: 'shoplist',
-        name: 'ShopList',
-        component: () => import('@/views/shop/add-shop/index'),
-        meta: { title: '商品列表', icon: 'el-icon-s-shop' }
-      }, {
-        path: 'addShop',
-        name: 'AddShop',
-        component: () => import('@/views/shop/add-shop/index'),
-        meta: { title: '添加商品', icon: 'el-icon-circle-plus' }
-      },{
-        path: 'shopCategories',
-        name: 'ShopCategories',
-        component: () => import('@/views/addShop/index'),
-        meta: { title: '商品分类', icon: 'el-icon-circle-plus' }
-      },{
-        path: 'brandManagement',
-        name: 'BrandManagement',
-        component: () => import('@/views/addShop/index'),
-        meta: { title: '品牌管理', icon: 'el-icon-circle-plus' }
+        path: "shoplist",
+        name: "ShopList",
+        component: () => import("@/views/shop/shop-list/index"),
+        meta: { title: "商品列表", icon: "el-icon-s-shop" },
       },
-    ]
+      {
+        path: "addShop",
+        name: "AddShop",
+        component: () => import("@/views/shop/add-shop/index"),
+        meta: { title: "添加商品", icon: "el-icon-circle-plus" },
+      },
+      {
+        path: "shopCategories",
+        name: "ShopCategories",
+        component: () => import("@/views/shop/shop-categories/index"),
+        meta: { title: "商品分类", icon: "el-icon-circle-plus" },
+      },
+      {
+        path: "brandManagement",
+        name: "BrandManagement",
+        component: () => import("@/views/shop/brand-management/index"),
+        meta: { title: "品牌管理", icon: "el-icon-circle-plus" },
+      },
+      {
+        path: "addBrand",
+        name: "AddBrand",
+        component: () => import("@/views/shop/add-brand/index"),
+        hidden: true,
+        meta: { title: "添加品牌" },
+      },
+      {
+        path: "productSecondMenu",
+        name: "productSecondMenu",
+        component: () => import("@/views/shop/product-second-menu/index"),
+      },
+    ],
   },
+
   {
-    path: '/marketing',
-    name: 'Marketing',
+    path: "/marketing",
+    name: "Marketing",
     redirect: "/marketing/coupon",
     component: Layout,
-    meta:{
+    meta: {
       title: "营销",
-      icon: 'el-icon-collection-tag',
-      roles:['admin']
+      icon: "el-icon-collection-tag",
+      roles: ["admin"],
     },
     children: [
       {
-        path: 'coupon', 
-        name: 'Coupon', 
-        component: () => import('@/views/coupon/index.vue'),
-        meta: { title: '优惠劵列表', icon: 'el-icon-shopping-cart-2' }
+        path: "coupon",
+        name: "Coupon",
+        component: () => import("@/views/coupon/index.vue"),
+        meta: { title: "优惠劵列表", icon: "el-icon-shopping-cart-2" },
       },
       {
-        path: 'secondaction', 
-        name: 'SecondAction', 
-        component: () => import('@/views/secondAction/index.vue'),
-        meta: { title: '秒杀活动列表', icon: 'el-icon-alarm-clock' }
+        path: "secondaction",
+        name: "SecondAction",
+        component: () => import("@/views/spikeCampaign/index.vue"),
+        meta: { title: "秒杀活动列表", icon: "el-icon-alarm-clock" },
       },
       {
-        path: 'voucherdetail', 
-        name: 'VoucherDetail', 
-        component: () => import('@/views/coupon/voucherDetail')
+        path: "voucherdetail",
+        name: "VoucherDetail",
+        component: () => import("@/views/coupon/voucherDetail"),
       },
       {
-        path: 'addvoucher', 
-        name: 'AddVoucher', 
-        component: () => import('@/views/coupon/addVoucher')
+        path: "addvoucher",
+        name: "AddVoucher",
+        component: () => import("@/views/coupon/addVoucher"),
       },
       {
-        path: 'editVoucher', 
-        name: 'EditVoucher', 
-        component: () => import('@/views/coupon/editVoucher')
+        path: "editVoucher",
+        name: "EditVoucher",
+        component: () => import("@/views/coupon/editVoucher"),
       },
-
-    ]
-
+    ],
   },
   {
-    path: '/oms',
+    path: "/oms",
     component: Layout,
-    redirect: '/oms/order',
-    name: 'oms',
-    meta: { title: '订单', icon: 'order' },
+    redirect: "/oms/order",
+    name: "oms",
+    meta: { title: "订单", icon: "order" },
     children: [
       {
-        path: 'order',
-        name: 'order',
-        component: () => import('@/views/oms/order/index'),
-        meta: { title: '订单列表', icon: 'product-list' }
+        path: "order",
+        name: "order",
+        component: () => import("@/views/oms/order/index"),
+        meta: { title: "订单列表", icon: "product-list" },
       },
       {
-        path: 'orderDetail/:order_id/:status',
-        name: 'orderDetail',
-        component: () => import('@/views/oms/order/orderDetail'),
-        meta: { title: '订单详情' },
+        path: "orderDetail/:order_id/:status",
+        name: "orderDetail",
+        component: () => import("@/views/oms/order/orderDetail"),
+        meta: { title: "订单详情" },
         props: true,
-        hidden: true
-      },
-      {
-        path: 'deliverOrderList/:order_id',
-        name: 'deliverOrderList',
-        component: () => import('@/views/oms/order/deliverOrderList'),
-        meta: { title: '发货列表' },
         hidden: true,
-        props: true
       },
       {
-        path: 'returnApply',
-        name: 'returnApply',
-        component: () => import('@/views/oms/returnApply/index'),
-        meta: { title: '退货申请处理', icon: 'order-return' }
+        path: "deliverOrderList/:order_id",
+        name: "deliverOrderList",
+        component: () => import("@/views/oms/order/deliverOrderList"),
+        meta: { title: "发货列表" },
+        hidden: true,
+        props: true,
+      },
+      {
+        path: "returnApply",
+        name: "returnApply",
+        component: () => import("@/views/oms/returnApply/index"),
+        meta: { title: "退货申请处理", icon: "order-return" },
       },
       // {
       //   path: 'returnApplyDetail/:id/:order_id',
@@ -247,51 +262,89 @@ export const asyncRoutes = [
       //   hidden: true,
       //   props: true
       // }
-    ]
+    ],
   },
   {
-    path: '/user',
-    name: 'User',
-    redirect: "/user/userList",
-    component: Layout,
-    meta:{
-      roles:['admin']
+    path: "/customer",
+    name: "Customer",
+    redirect: "/customer/service",
+    component: ()=>import("@/views/service/index"),
+    meta: {
+      roles: ["admin"],
     },
     children: [
       {
-        path: 'userList',
-        name: 'UserList',
-        component: () => import('@/views/userList/index'),
+        path: "service",
+        name: "Service",
+        component: () => import("@/views/service/index.vue"),
         meta: {
-          title: '用户列表',
-          icon: "el-icon-user"
-        }
-      }
-    ]
+          title: "客服",
+          icon: "el-icon-service",
+        },
+      },
+    ],
   },
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    path: "/store",
+    name: "Store",
+    redirect: "/store/storeinfo",
+    component: Layout,
+    meta: {
+      roles: ["admin"],
+    },
+    children: [
+      {
+        path: "storeinfo",
+        name: "Storeinfo",
+        component: () => import("@/views/storeInfo/index.vue"),
+        meta: {
+          title: "店铺信息",
+          icon: "el-icon-s-shop",
+        },
+      },
+    ],
+  },
+  {
+    path: "/user",
+    name: "User",
+    redirect: "/user/userList",
+    component: Layout,
+    meta: {
+      roles: ["admin"],
+    },
+    children: [
+      {
+        path: "userList",
+        name: "UserList",
+        component: () => import("@/views/userList/index"),
+        meta: {
+          title: "用户列表",
+          icon: "el-icon-user",
+        },
+      },
+    ],
+  },
+  { path: "*", redirect: "/404", hidden: true },
+];
 
-]
-
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes,
+  });
 
 // 创建路由对象，路由配置只使用constantRoutes,等待用户登录成功后，获取用户的角色,
 // 然后根据角色，生成基于这个角色的路由配置，通过addRoutes的方法添加到router对象上。
-const router = createRouter()
-
+const router = createRouter();
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 
-export default router
-
+export default router;
 
 // export const asyncRoutes = [
 //   {
@@ -383,4 +436,3 @@ export default router
 //   // 404 page must be placed at the end !!!
 //   { path: '*', redirect: '/404', hidden: true }
 // ]
-

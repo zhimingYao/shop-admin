@@ -1,32 +1,63 @@
 <template>
   <div class="add-shop">
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="productInfoForm" :model="form" label-width="80px">
 
       <el-form-item label="产品分类">
         <el-cascader v-model="productCateOptionsValue" :options="productCateOptions" clearable
-          @change="handleCateChange"></el-cascader>
+          @change="handleCateChange">
+        </el-cascader>
       </el-form-item>
 
-      <el-form-item label="产品名称">
+      <el-form-item label="*产品名称">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
 
-      <el-form-item label="产品品牌">
-        <el-select v-model="form.region" placeholder="添加新品牌">
-          <el-option label="区域一" value="shanghai"></el-option>
+      <el-form-item label="*产品品牌">
+        <el-select v-model="form.brandName" placeholder="添加新品牌" @change="brandChange">
+          <el-option value="添加新品牌"></el-option>
         </el-select>
       </el-form-item>
 
+
       <el-form-item label="产品图片" class="product-img">
-        <div class="product-img-div" @click="uploadImg"><i> + </i></div>
+        <div style=" display: flex;justify-content: left;">
+          <div>
+            <img :src="form.img" alt="" style="height:135px;margin-right: 20px;" v-show="imgCreated">
+          </div>
+          <div class="product-img-div">
+            <el-upload :auto-upload="true" :disabled="isActive" action="/upload/upload"
+              list-type="picture-card" :on-preview="handlePictureCardPreview" :file-list="fileList"
+              :on-remove="handleRemove" :on-success="handle_success" :before-upload="before_upload">
+              <i slot="default" class="el-icon-plus"></i>
+              <div slot="file" slot-scope="{file}">
+                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+                <span class="el-upload-list__item-actions">
+                  <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+                    <i class="el-icon-zoom-in"></i>
+                  </span>
+                  <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
+                    <i class="el-icon-download"></i>
+                  </span>
+                  <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
+                    <i class="el-icon-delete"></i>
+                  </span>
+                </span>
+              </div>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </div>
+        </div>
       </el-form-item>
 
       <el-form-item label="产品介绍" prop="desc">
-        <el-input type="textarea" placeholder="请输入内容"></el-input>
+        <el-input type="textarea" v-model="form.description" placeholder="请输入内容"></el-input>
       </el-form-item>
 
       <el-form-item label="产品售价">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.price"></el-input>
+
       </el-form-item>
 
       <el-form-item style="text-align: center">
@@ -37,21 +68,20 @@
 </template>
 
 <script>
-import { getCateGory } from '@/api/shop.js'
+
+import { getCateGory, addSpu } from '@/api/shop.js'
+
 export default {
   name: 'AddShop',
 
   data() {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        name: "", // 商品名
+        brandName: "",
+        img: '',
+        description: "",
+        price: "",
       },
       productCateOptionsValue: [],
       productCateOptions: [
@@ -91,57 +121,101 @@ export default {
           children: [],
         },
       ],
+      dialogImageUrl: '',
+      dialogVisible: false,
+      disabled: false,
+      fileList: [],
+      isActive: false,
+      imgCreated: false,
     }
   },
   methods: {
+    brandChange() {
+      if (this.form['brandName'] === "添加新品牌") {
+        this.$confirm('添加新商品, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push('/shop/addBrand')
+        })
+      }
+    },
     onSubmit() {
-      console.log('submit!');
+      // console.log('submit!');
+
     },
     uploadImg() {
     },
     // 分类改变时
     handleCateChange() {
-      console.log("改变了分类");
-      console.log(this.selectProductCateValue);
+
+      // console.log("改变了分类");
+      // console.log(this.productCateOptionsValue);
       let brandArr = this.productCateOptionsValue;
-      console.log(brandArr[1]);
+      // console.log(brandArr[1]);
       // 获取品牌名
     },
-    // 获取2级分类
-    async getProductCateList() {
-      for (let i = 0; i < this.productCateOptions.length; i++) {
-        let message = { parent_name: "" };
-        message.parent_name = this.productCateOptions[i].label;
-        await getCateGory(message)
-          .then((res) => {
-            console.log(res.data.data, i);
-            let titleName = res.data.data;
-            for (let k = 0; k < titleName.length; k++) {
-              // console.log(titleName[i])
-              this.productCateOptions[i].children.push({
-                value: `${titleName[k].id}`,
-                label: `${titleName[k].name}`,
-              });
-            }
-
-            // console.log(this.productCateOptions)
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+    // 上传图片函数
+    handleRemove(file) {
+      console.log(file);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleDownload(file) {
+      console.log(file);
+    },
+    // 上传之前
+    before_upload(file) {
+      console.log(file);
+    },
+    handleNext() {
+      // 准备数据
+      const data = {
+        title: this.form.name,
+        // store_id: this.storeInfo.id,
+        store_id: 1,
+        // spec: name,
+        spec: '1',
+        img: this.dialogImageUrl,
+        price: this.form.price,
+        brand: this.form.brandName,
+        sub_title: this.form.description,
+      };
+      // 添加spu
+      addSpu(data)
+        .then((res) => {
+          // console.log("添加成功", res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  // 上传成功
+    handle_success(response, file, fileList) {
+      this.form.img = file.url;
     }
   },
 
   created() {
-    this.getProductCateList()
+    if (this.$route.query) {
+      this.form = this.$route.query;
+      this.imgCreated = true;
+    }
 
   },
 
   mounted() {
 
   },
-};
+
+  watch: {
+
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -161,7 +235,8 @@ export default {
     .product-img-div {
       width: 128px;
       height: 128px;
-      border: 1px dashed rgb(160, 159, 159);
+
+
       border-radius: 10px;
 
       i {
@@ -171,12 +246,19 @@ export default {
         margin: 50% 50%;
         transform: translate(-20%, -50%);
       }
-
-      &:hover {
-        border: 1px dashed rgb(63, 130, 255);
-      }
     }
 
   }
+}
+
+
+.el-form-item__content {
+  width: 800px !important;
+  display: flex;
+  justify-content: left;
+}
+
+.product-img-div {
+  width: 1000px !important;
 }
 </style>
