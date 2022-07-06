@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getMenu, addParent, selectParentNameNUll,deleteProduct } from '@/api/menu'
+import { getMenu, addParent, selectParentNameNUll, deleteProduct } from '@/api/menu'
 export default {
   name: 'ShopCategories',
 
@@ -64,15 +64,17 @@ export default {
 
       formLabelWidth: "120",
       // 表格数据
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }],
+      tableData: [
+        //   {
+        //   date: '1',
+        //   name: '衣服',
+        //   address: '上海市普陀区金沙江路 1518 弄'
+        // }, {
+        //   date: '2',
+        //   name: '鞋帽',
+        //   address: '上海市普陀区金沙江路 1516 弄'
+        // }
+      ],
       // 获取到的分类
       addParentNameArr: [],
       category_id: [],
