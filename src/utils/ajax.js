@@ -23,7 +23,7 @@ const serve = axios.create({
 
 /* 请求拦截器 */
 serve.interceptors.request.use((config)=>{
-    console.log('%c请求数据','background-color:yellow;padding:10px:',);
+    // console.log('%c请求数据','background-color:yellow;padding:10px:',);
 
     return config
 },(err)=>{

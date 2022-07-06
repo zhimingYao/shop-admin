@@ -5,8 +5,8 @@ export function getOrder(data) {
     // console.log(data);
     //store_id 店铺id  count 请求的件数  page 请求的页数
     return request({
-        method:"post",
         url:"/order/getOrder",
+        method:"post",
         data,
     })
 }

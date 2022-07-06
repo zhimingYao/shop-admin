@@ -82,7 +82,7 @@ export default {
       getOrder(data)
         .then((res) => {
           this.tableData = res.data[0];
-          console.log(res.data[0]);
+          // console.log(res.data[0],data);
         })
         .catch((req) => {
           console.log(req);
@@ -90,24 +90,25 @@ export default {
     },
     // 查看订单
     handleViewOrder(str) {
-      console.log(str);
+      // console.log(str);
+      this.$store.dispatch("order/getOrderDetail", str);
+      this.$router.push(`orderDetail/${str.id}/${str.status}`);
     },
     // 订单发货
     handleDeliverOrder(str) {
-      console.log(str);
+      // console.log(str);
       this.$store.dispatch("order/getDeliveList", str);
       this.$router.push(`deliverOrderList/${str.id}`);
     },
     // 删除订单
     handleDeleteOrder(str) {
-      console.log(str);
+      // console.log(str);
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -124,6 +125,7 @@ export default {
   created() {
     this.getOrder_();
   },
+  watch: {},
 };
 </script>
 

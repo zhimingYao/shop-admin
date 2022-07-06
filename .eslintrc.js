@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* eslint-disable */
 module.exports = {
 
@@ -58,7 +57,6 @@ module.exports = {
         "consistent-this": [2, "that"],
     }
     };
-=======
 module.exports = {
   root: true,
   parserOptions: {
@@ -257,4 +255,3 @@ module.exports = {
     'array-bracket-spacing': [2, 'never']
   }
 }
->>>>>>> master

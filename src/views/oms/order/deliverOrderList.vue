@@ -19,23 +19,28 @@
         <el-table-column prop="tel" label="手机号码"> </el-table-column>
         <el-table-column prop="address" label="收货地址" width="150">
         </el-table-column>
-        <el-table-column prop="payment_type" label="配送方式">
-          <el-input placeholder="请输入配送方式"></el-input>
+        <el-table-column label="配送方式">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.ecp" placeholder="请输入配送方式"></el-input>
+          </template>
         </el-table-column>
-        <el-table-column prop="status" label="物流单号">
-          <el-input placeholder="请输入物流单号"></el-input>
+        <el-table-column label="物流单号">
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.postid" placeholder="请输入物流单号"></el-input>
+          </template>
         </el-table-column>
       </el-table>
     </div>
+    
     <div class="delive-foot">
-      <el-button @click="goBack">取消</el-button>
+      <el-button @click="cancel">取消</el-button>
       <el-button type="primary" @click="isDelive">确定</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import { getOrderDetail } from "@/api/order";
+import { getOrderDetail,updateOrder } from "@/api/order";
 export default {
   name: "deliverOrderList",
   data() {
@@ -43,6 +48,8 @@ export default {
       deliveList: [],
       orderId: null,
       status: null,
+      postid:'',
+      ecp:''
     };
   },
   created() {
@@ -51,13 +58,14 @@ export default {
     this.getOrderDetail_();
   },
   methods: {
+    // 获取订单详情
     getOrderDetail_() {
       let order_id = this.orderId;
       let status = this.status;
       let data = { order_id, status };
       getOrderDetail(data)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.deliveList.push(res.data);
           console.log(this.deliveList);
         })
@@ -72,11 +80,12 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       })
-        .then(() => {
+        .then((res) => {
           this.$message({
             type: "success",
             message: "发货成功!",
           });
+          this.$router.push(`/oms/order`);
         })
         .catch(() => {
           this.$message({
@@ -85,10 +94,18 @@ export default {
           });
         });
     },
-    goBack(){
-        this.$router.back()
-    }
+    // 返回上一页
+    cancel() {
+      // for (let item of this.deliverList) {
+      //   this.$set(item, "ecp", "");
+      //   this.$set(item, "postid", "");
+      // }
+      this.$router.back()
+    },
   },
+  watch:{
+    
+  }
 };
 </script>
 
@@ -98,7 +115,6 @@ export default {
 }
 .delive {
   padding: 20px 40px;
-  //   background-color: aqua;
   .delive_title {
     box-shadow: none;
     margin-bottom: 20px;

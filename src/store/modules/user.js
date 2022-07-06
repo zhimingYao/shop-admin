@@ -60,7 +60,7 @@ const actions = {
     // 返回 promise
     return new Promise((resolve, reject) => {
       //向服务器发请求，获取用户信息
-      console.log(state.id);
+      // console.log(state.id);
       getInfo({id:state.id}).then(response => {
         const { data } = response
         // console.log(data);
