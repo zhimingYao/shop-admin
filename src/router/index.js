@@ -265,6 +265,26 @@ export const asyncRoutes = [
     ],
   },
   {
+    path: "/store",
+    name: "Store",
+    redirect: "/store/storeinfo",
+    component: Layout,
+    meta: {
+      roles: ["admin"],
+    },
+    children: [
+      {
+        path: "storeinfo",
+        name: "Storeinfo",
+        component: () => import("@/views/storeInfo/index.vue"),
+        meta: {
+          title: "店铺信息",
+          icon: "el-icon-s-shop",
+        },
+      },
+    ],
+  },
+  {
     path: "/user",
     name: "User",
     redirect: "/user/userList",
