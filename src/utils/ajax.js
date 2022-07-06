@@ -17,8 +17,8 @@ const serve = axios.create({
      * process.env 读取环境变量文件。运行命令不同，读取环境变量也不同
      * VUE_APP_BASE_API_MANAGER  环境变量文件中声明的变量名
      */
-    // baseURL: process.env.VUE_APP_BASE_API_YZM,
-    baseURL: process.env.VUE_APP_BASE_API_YS,
+    baseURL: process.env.VUE_APP_BASE_API_YZM,
+    // baseURL: process.env.VUE_APP_BASE_API_YS,
     timeout:5000,//多长时间没连接成功响应请求失败
 })
 

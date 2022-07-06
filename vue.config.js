@@ -39,7 +39,12 @@ module.exports = {
     before: require('./mock/mock-server.js'),
     proxy:{
       "/":{
+<<<<<<< HEAD
         target:"http://192.168.205.83:3000",
+=======
+        target:"http://192.168.205.195:3000",
+        // target:"http://192.168.205.83:3000",
+>>>>>>> aa8f6e2d2ebe147b9df6586758cba5cef1e078c6
         changeOrigin:true,
         pathRewrite:{
           "^/":''
