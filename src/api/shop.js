@@ -59,15 +59,6 @@ export function deleteSpu(data){
   })
 }
 
-// 根据关键字搜索商品
-export function search(data){
-  // console.log(!store_id);
-  return http({
-      url:'/store/search',
-      method:'post',
-      data,
-  })
-}
 
 /* 查询产品 */
 export function getSpu(data) {

@@ -265,6 +265,46 @@ export const asyncRoutes = [
     ],
   },
   {
+    path: "/customer",
+    name: "Customer",
+    redirect: "/customer/service",
+    component: ()=>import("@/views/service/index"),
+    meta: {
+      roles: ["admin"],
+    },
+    children: [
+      {
+        path: "service",
+        name: "Service",
+        component: () => import("@/views/service/index.vue"),
+        meta: {
+          title: "客服",
+          icon: "el-icon-service",
+        },
+      },
+    ],
+  },
+  {
+    path: "/store",
+    name: "Store",
+    redirect: "/store/storeinfo",
+    component: Layout,
+    meta: {
+      roles: ["admin"],
+    },
+    children: [
+      {
+        path: "storeinfo",
+        name: "Storeinfo",
+        component: () => import("@/views/storeInfo/index.vue"),
+        meta: {
+          title: "店铺信息",
+          icon: "el-icon-s-shop",
+        },
+      },
+    ],
+  },
+  {
     path: "/user",
     name: "User",
     redirect: "/user/userList",
