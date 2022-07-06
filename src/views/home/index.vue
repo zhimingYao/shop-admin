@@ -1,142 +1,112 @@
 <template>
-  <div>
-    <el-form :model="obj" ref="formData">
-      <!--
-        1  prop 属性 通知组件内部，需要验证的什么数据
-        2 rules 是 el-form 或者el-form-item 中属性
-       -->
-      <!-- 
-        trigger  设置什么时候验证，默认 失去焦点，改变 change事件
-        required 是否必填
-        message  验证不通过的提示信息
-        type     验证数据类型 
-           number 数字
-           email  邮箱
-           date  日期
-           array
-        min  最小长度
-        max 最大长度
-        pattern 输入自定义的正则规则
-           
-       -->
-      <el-form-item
-        prop="a"
-        :rules="[
-          { required: true, message: '必须添加a', trigger: 'blur' },
-          { min: 3, max: 12, message: '长度在3到12之间', trigger: 'blur' },
-        ]"
-      >
-        <el-input v-model="obj.a" />
-      </el-form-item>
-      <el-form-item
-        prop="b"
-        :rules="[
-          { required: true, trigger: 'blur', message: '请输入文本内容' },
-          { pattern: /\d{3,12}/, message: '请输入3到12的数字' },
-        ]"
-      >
-        <el-input v-model="obj.b" />
-      </el-form-item>
-
-      <el-form-item prop="c" :rules="cRules" ref="itemRule">
-        <el-input v-model="obj.c" />
-      </el-form-item>
-
-      <el-button @click="handle">点击获取表单验证结果</el-button>
-    </el-form>
-
-    <!-- 第二个表单,点击收验证 -->
-    <el-form
-      :model="a"
-      ref="numberValidateForm"
-      label-width="100px"
-      class="demo-ruleForm"
-    >
-      <el-form-item
-        label="年龄"
-        prop="age"
-        :rules="[
-          { required: true, message: '年龄不能为空' },
-          { type: 'number', message: '年龄必须为数字值' },
-        ]"
-      >
-        <el-input
-          type="age"
-          v-model.number="a.age"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('numberValidateForm')"
-          >提交</el-button
-        >
-      </el-form-item>
-    </el-form>
+  <div class="main">
+    <div class="datainfo">
+      <div class="total">
+        <div class="icon">
+          <i class="el-icon-s-order"></i>
+        </div>
+        <div class="info">
+          <span>今日订单总数</span>
+          <p>200</p>
+        </div>
+      </div>
+      <div class="total">
+        <div class="icon">
+          <i class="el-icon-money"></i>
+        </div>
+        <div class="info">
+          <span>今日销售总额</span>
+          <p>200</p>
+        </div>
+      </div>
+      <div class="total">
+        <div class="icon">
+          <i class="el-icon-coin"></i>
+        </div>
+        <div class="info">
+          <span>昨日销售总额</span>
+          <p>200</p>
+        </div>
+      </div>
+      <div class="total">
+        <div class="icon">
+          <i class="el-icon-box"></i>
+        </div>
+        <div class="info">
+          <span>全部商品</span>
+          <p>200</p>
+        </div>
+      </div>
+    </div>
+    <div class="chart" ref="chart"></div>
   </div>
 </template>
 
 <script>
+let Echarts = require("echarts/lib/echarts"); //基础实例 注意不要使用import
+require("echarts/lib/chart/bar"); //按需引入 bar = 柱状图
 export default {
   data() {
-    const validator_C = (rules, value, callback) => {
-      // 这里可以编写自定义配置
-      // console.log(rules);
-      // console.log(value); // 输入框中value之
-      // console.log(callback); // callback 作用抛出错误提示信息，作用类似message
-      // callback(new Error('哈哈哈哈哈'))
-      if (value.trim() === "") {
-        let res = callback(new Error("请输入文本内容"));
-        //  console.log(res); // undefined
-        return;
-      }
-      let reg = /\w{2}/;
-      if (!reg.test(value)) {
-        callback(new Error("请输入长度为2的随机字符"));
-        return;
-      }
-      return true;
-    };
-    return {
-      obj: {
-        a: "",
-        b: "",
-        c: "",
-      },
-      cRules: [
-        // { required: true, trigger: 'blur', message: '请输入文本内容' },
-        { validator: validator_C, trigger: "blur" },
-      ],
-      a:{
-        age:''
-      }
-    };
+    return { chart: null };
+  }, //图表实例
+  mounted() {
+    this.init();
+    window.addEventListener("resize", () => {
+      this.chart.resize();
+    });
   },
   methods: {
-    // 点击时候验证表单,需要将所有规则 将所有的 trigger删除.或者将规则放在 el-form上
-    handle() {
-      console.log("aaa");
-      // console.log(this.$refs['formData']);
-      // validate() 点击按钮验证表单时候,触发函数.
-      // 表单验证通过 vaild 返回 true 不通过为 false
-      this.$refs["formData"].validate((vaild) => {
-        console.log("表单验证结束了");
-        console.log(vaild);
-      });
+    init() {
+      // console.log(this.$refs.chart,document.getElementsByClassName('chart'));
+      //2.初始化
+      // this.chart = Echarts.init(this.$refs.chart);
+      this.chart = Echarts.init(document.getElementsByClassName('chart')[0]);
+      //3.配置数据
+      let option = {
+        xAxis: {
+          type: "category",
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        }, //X轴
+        yAxis: { type: "value" }, //Y轴
+        series: [{ data: [120, 200, 150, 80, 70, 110, 130], type: "bar" }], //配置项
+      };
+      // 4.传入数据
+      this.chart.setOption(option);
     },
-     submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          console.log('提交验证结果:',valid);
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-     },
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.main {
+  padding: 0;
+  margin: 0 auto;
+}
+.datainfo {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 80px auto;
+}
+.total {
+  width: 22%;
+  display: flex;
+  justify-content: start;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid #e4e3e4;
+  .icon {
+    width: 30%;
+    font-size: 60px;
+    color: blue;
+  }
+  .info {
+    line-height: 10px;
+    margin-top: 20px;
+  }
+}
+.chart {
+  width: 100%;
+  height: 400px;
+}
 </style>

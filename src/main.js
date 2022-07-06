@@ -14,6 +14,7 @@ import router from './router'
 // @/  === src/
 import '@/icons' // icon
 import '@/permission' // permission control
+import "echarts";
 
 /**
  * If you don't want to use mock-server
