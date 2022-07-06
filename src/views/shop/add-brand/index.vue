@@ -18,8 +18,8 @@
 
 
       <el-form-item label="*品牌LOGO" class="brand-img">
-        <el-upload class="upload-demo" action="http://192.168.205.83:3000/posts/" list-type="picture" v-model="form.img"
-          :on-success="handleSuccess" :before-upload="handleUBeforeUpload">
+        <el-upload class="upload-demo" action="/upload/upload" list-type="picture" v-model="form.img"
+          :on-success="handleSuccess">
           <el-button size="small" type="primary">点击上传</el-button>
           <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
@@ -52,14 +52,7 @@ export default {
           value: "shumajiadian",
           label: "数码家电",
           children: [
-            {
-              value: '1',
-              label: 'xiangji'
-            },
-            {
-              value: '2',
-              label: 'shoubiao'
-            }
+
           ],
         },
         {
@@ -70,7 +63,26 @@ export default {
         {
           value: "fushi",
           label: "服饰",
-          children: [],
+          children: [{
+            value: '1',
+            label: '休闲上衣'
+          },
+          {
+            value: '2',
+            label: '短袖针织衫'
+          },
+          {
+            value: '3',
+            label: '中袖针织衫'
+          },
+          {
+            value: '4',
+            label: '梭织休闲长裤'
+          },
+          {
+            value: '5',
+            label: '梭织运动长裤'
+          }],
         },
         {
           value: "meishi",
@@ -97,7 +109,6 @@ export default {
   },
   methods: {
     brandChange() {
-      console.log('ddd');
       if (this.form['brandName'] === "添加新品牌") {
         this.$confirm('添加新商品, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -120,7 +131,7 @@ export default {
       // console.log("改变了分类");
       // console.log(this.productCateOptionsValue);
       let brandArr = this.productCateOptionsValue;
-      console.log(brandArr[1]);
+      // console.log(brandArr[1]);
       // 获取品牌名
     },
     // 上传文件的几个函数
@@ -138,19 +149,14 @@ export default {
     },
     // 上传成功
     handleSuccess(response, file, fileList) {
-      console.log(response, file, fileList);
+      this.form.img = file.url.slice(5);
     },
-    // 上传之前
-    handleUBeforeUpload(file) {
-      console.log(file);
-      this.form.img = file;
-    },
-    // 提交
+    // 点击提交
     handleNext() {
-      console.log('提交');
-      // console.log(this.form);
-      addBrand(this.form.name, this.form.img.name, this.form.firstLetter).then((res) => {
+      let data = { name: this.form.name, image: this.form.img, letter: this.form.firstLetter }
+      addBrand(data).then((res) => {
         console.log(res);
+        console.log(data);
       }).catch((err) => {
         console.log(err);
       })
@@ -160,11 +166,11 @@ export default {
 
   created() {
     if (this.$route.query) {
-      this.form ={
+      this.form = {
         name: this.$route.query.name, // 商品名
         firstLetter: "",
         img: "",
-      } ;
+      };
     }
   },
 

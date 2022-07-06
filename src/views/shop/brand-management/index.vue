@@ -64,7 +64,7 @@ export default {
     // 渲染页面
     getBrands() {
       getBrands({ store_id: this.$store.state.user.id }).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.tableData = res.data;
       }).catch((err)=>{
         console.log(err);
@@ -78,7 +78,7 @@ export default {
     // 删除
     deleteShop(data) {
       deleteBrand({ id: data.id }).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.$message('删除成功');
       })
     }

@@ -57,7 +57,9 @@
 
 
           <el-table-column prop="" label="SKU库存" width="150">
-            <el-button type="primary" icon="el-icon-edit" circle></el-button>
+            <template slot-scope="scope">
+              <el-button type="primary" icon="el-icon-edit" circle @click="kuCun(scope.row)"></el-button>
+            </template>
           </el-table-column>
           <el-table-column prop="sale" label="销量" width="150">
           </el-table-column>
@@ -76,7 +78,14 @@
         @current-change="currentChange" :current-page.sync="currentPage">
       </el-pagination>
     </div>
-
+    <div class="kucun-table">
+      <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
+        <el-table :data="gridData">
+          <el-table-column property="price" label="销售价格" width="350"></el-table-column>
+          <el-table-column property="kucun" label="商品库存" width="400"></el-table-column>
+        </el-table>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -95,6 +104,11 @@ export default {
       // table展示数据
       tableData: [],
       currentPage: 1,
+      gridData: [{
+        price: '',
+        kucun: 0,
+      },],
+      dialogTableVisible: false,
     }
   },
   created() {
@@ -129,9 +143,24 @@ export default {
     },
     // 删除商品
     deleteShop(data) {
-      deleteSpu({ id: data.id }).then((res) => {
-        this.getShopList()
-      })
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+        deleteSpu({ id: data.id }).then((res) => {
+          this.getShopList()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
     // 添加优惠卷
     addCoupon(data) {
@@ -151,14 +180,20 @@ export default {
     currentChange() {
       let page = this.currentPage;
       this.tableData = this.tableDatas.slice((page - 1) * 20, page * 20 - 1);
+    },
+    // 库存按钮
+    kuCun(data) {
+      this.dialogTableVisible = true;
+      this.gridData[0].price = data.price;
+      let category_id = data.category_id;
+      console.log(category_id);
+      getStock({ category_id: category_id }).then((res) => {
+        this.gridData[0].kucun = res.data[0]
+      })
     }
   },
   computed: {
-    // 获取库存
-    getStock() {
-      return res
-      getStock(category_id)
-    }
+
   }
 }
 </script>

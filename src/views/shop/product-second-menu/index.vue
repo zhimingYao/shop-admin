@@ -61,9 +61,9 @@ export default {
         category_id: this.category_id
       })
         .then(res => {
-          console.log(this.category_id);
+          // console.log(this.category_id);
           if (res.code == 200) {
-            console.log(res, "插入成功");
+            // console.log(res, "插入成功");
             this.dialogVisible = false;
             this.$message({
               type: "success",
@@ -108,7 +108,7 @@ export default {
         parent_name: this.$route.query.parent_name
       }).then(res => {
         this.secondMenu = res.data.data;
-        console.log(res, '获取成功');
+        // console.log(res, '获取成功');
       }).catch(err => {
         console.log(err, '获取失败');
       })
@@ -129,7 +129,7 @@ export default {
         parent_name: this.parent_name
       })
         .then(res => {
-          console.log(res, "删除成功了呦");
+          // console.log(res, "删除成功了呦");
           location.reload();
         })
         .catch(err => {

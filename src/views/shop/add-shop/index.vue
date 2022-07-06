@@ -1,6 +1,6 @@
 <template>
   <div class="add-shop">
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="productInfoForm" :model="form" label-width="80px">
 
       <el-form-item label="产品分类">
         <el-cascader v-model="productCateOptionsValue" :options="productCateOptions" clearable
@@ -25,9 +25,9 @@
             <img :src="form.img" alt="" style="height:135px;margin-right: 20px;" v-show="imgCreated">
           </div>
           <div class="product-img-div">
-            <el-upload :auto-upload="false" :disabled="isActive" action="http://192.168.205.83:3000/posts/"
-              list-type="picture-card" :limit="1" :on-preview="handlePictureCardPreview" :file-list="fileList"
-              :on-remove="handleRemove" :on-success="handle_success">
+            <el-upload :auto-upload="true" :disabled="isActive" action="/upload/upload"
+              list-type="picture-card" :on-preview="handlePictureCardPreview" :file-list="fileList"
+              :on-remove="handleRemove" :on-success="handle_success" :before-upload="before_upload">
               <i slot="default" class="el-icon-plus"></i>
               <div slot="file" slot-scope="{file}">
                 <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
@@ -56,7 +56,7 @@
       </el-form-item>
 
       <el-form-item label="产品售价">
-      <el-input v-model="form.price"></el-input>
+        <el-input v-model="form.price"></el-input>
 
       </el-form-item>
 
@@ -131,7 +131,6 @@ export default {
   },
   methods: {
     brandChange() {
-      console.log('ddd');
       if (this.form['brandName'] === "添加新品牌") {
         this.$confirm('添加新商品, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -159,18 +158,20 @@ export default {
     },
     // 上传图片函数
     handleRemove(file) {
-      // console.log(file);
+      console.log(file);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
     handleDownload(file) {
-      // console.log(file);
+      console.log(file);
+    },
+    // 上传之前
+    before_upload(file) {
+      console.log(file);
     },
     handleNext() {
-      // 向vuex中添加数据
-      // this.updateSpuTitle(this.form.name);
       // 准备数据
       const data = {
         title: this.form.name,
@@ -183,25 +184,18 @@ export default {
         brand: this.form.brandName,
         sub_title: this.form.description,
       };
-
-      // console.log("进入下一栏");
-
-      // this.$emit("nextStep");
-
       // 添加spu
       addSpu(data)
         .then((res) => {
-          console.log("添加成功", res);
+          // console.log("添加成功", res);
         })
         .catch((err) => {
           console.log(err);
         });
-      this.$emit("nextStep");
     },
-
+  // 上传成功
     handle_success(response, file, fileList) {
-      console.log(response, file, fileList);
-
+      this.form.img = file.url;
     }
   },
 
@@ -252,10 +246,6 @@ export default {
         margin: 50% 50%;
         transform: translate(-20%, -50%);
       }
-
-      &:hover {
-        border: 1px dashed rgb(63, 130, 255);
-      }
     }
 
   }
@@ -268,4 +258,7 @@ export default {
   justify-content: left;
 }
 
+.product-img-div {
+  width: 1000px !important;
+}
 </style>

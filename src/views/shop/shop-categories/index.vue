@@ -96,7 +96,6 @@ export default {
       }).then(res => {
         if (res.code == 200) {
           this.addParentNameArr = res.data;
-          console.log('获取一级分类成功');
           for (let i = 0; i < this.addParentNameArr.length; i++) {
             this.category_id = this.addParentNameArr[i].id
           }
@@ -107,8 +106,6 @@ export default {
     },
     // 获取二级品类
     getMenu(index, row) {
-
-      console.log(row.name, index);
       this.$router.push({
         path: "/shop/productSecondMenu",
         query: {
@@ -116,14 +113,6 @@ export default {
           id: row.id
         }
       });
-      // 获取store_id
-      // let store_id = this.$store.state.user.id;
-      // console.log(store_id);
-      // getMenu({ store_id: store_id }).then((res) => {
-      //   console.log(res);
-      // }).catch((err) => {
-      //   console.log(err);
-      // })
     },
     // 添加品类
     addParent() {
@@ -131,9 +120,7 @@ export default {
         store_id: this.$store.state.user.id,
         category_id: this.category_id
       }).then(res => {
-        console.log(this.category_id);
         if (res.code == 200) {
-          console.log(res, '插入成功');
           this.dialogVisible = false
           this.$message({
             type: 'success',
@@ -141,8 +128,6 @@ export default {
           })
         }
         this.dialogVisible = false
-        // location.reload()
-        // this.selectProduceList();
       }).catch(err => {
         this.$message({
           type: 'error',
@@ -162,7 +147,7 @@ export default {
             message: "删除成功",
             type: "success"
           });
-          console.log(row.id, res);
+          // console.log(row.id, res);
           location.reload();
         });
       });

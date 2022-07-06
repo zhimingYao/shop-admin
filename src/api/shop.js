@@ -11,12 +11,11 @@ export function getCateGory(data){
 }
 
 // 提交 添加品牌
-export function addBrand(name, image, letter){
-  console.log({name, image, letter});
+export function addBrand(data){
   return http({
       url:'/wares/addBrand',
       method:'post',
-      data:{name, image, letter}
+      data,
   })
 }
 
