@@ -233,7 +233,8 @@ export const asyncRoutes = [
         meta: { title: "订单列表", icon: "product-list" },
       },
       {
-        path: "orderDetail/:order_id/:status",
+        // /:order_id/:status
+        path: "orderDetail",
         name: "orderDetail",
         component: () => import("@/views/oms/order/orderDetail"),
         meta: { title: "订单详情" },
@@ -241,7 +242,7 @@ export const asyncRoutes = [
         hidden: true,
       },
       {
-        path: "deliverOrderList/:order_id",
+        path: "deliverOrderList",
         name: "deliverOrderList",
         component: () => import("@/views/oms/order/deliverOrderList"),
         meta: { title: "发货列表" },

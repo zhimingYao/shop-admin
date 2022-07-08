@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import {getBackStock} from '@/api/order'
 export default {
   name: "returnApply",
   data() {
@@ -27,6 +28,20 @@ export default {
       ],
     };
   },
+  methods:{
+    getBackStock_(){
+      const store_id = 1;
+      console.log('getBackStock_ run');
+      getBackStock({store_id}).then((res)=>{
+        console.log(res);
+      }).catch((req)=>{
+        console.log(req);
+      })
+    }
+  },
+  created(){
+    this.getBackStock_()
+  }
 };
 </script>
 

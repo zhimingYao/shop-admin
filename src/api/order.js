@@ -22,7 +22,7 @@ export function getOrderDetail(data) {
 
 // 修改订单信息
 export const updateOrder=(data)=>{
-    return service({
+    return request({
         method:"post",
         url:"/order/updateOrder",
         data,
@@ -31,30 +31,32 @@ export const updateOrder=(data)=>{
 
 // 删除订单信息
 export const deleteOrder=(data)=>{
-    return service({
+    console.log(data);
+    return request({
         method:"post",
         url:"/order/deleteOrder",
         data
     })
 }
 
-// 
+// 查询退款列表
 export const getBackStock=(data)=>{
-    return service({
+    console.log(data);
+    return request({
         method:"post",
         url:"/order/getBackStock",
         data
     })
 }
 export const getBackStockDetail=(data)=>{
-    return service({
+    return request({
         method:"post",
         url:"/order/getBackStockDetail",
         data
     })
 }
 export const updateBackStock=(data)=>{
-    return service({
+    return request({
         method:'post',
         url:'order/updateBackStock',
         data,

@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { getOrder } from "@/api/order";
+import { getOrder, deleteOrder } from "@/api/order";
 export default {
   name: "order",
   data() {
@@ -82,7 +82,7 @@ export default {
       getOrder(data)
         .then((res) => {
           this.tableData = res.data[0];
-          // console.log(res.data[0],data);
+          // console.log(res.data[0]);
         })
         .catch((req) => {
           console.log(req);
@@ -92,27 +92,37 @@ export default {
     handleViewOrder(str) {
       // console.log(str);
       this.$store.dispatch("order/getOrderDetail", str);
-      this.$router.push(`orderDetail/${str.id}/${str.status}`);
+      // this.$router.push(`orderDetail/${str.id}/${str.status}`);
+      this.$router.push(`orderDetail?order_id=${str.id}&status=${str.status}`);
+      // /:/:
     },
     // 订单发货
     handleDeliverOrder(str) {
-      // console.log(str);
+      console.log(str);
       this.$store.dispatch("order/getDeliveList", str);
-      this.$router.push(`deliverOrderList/${str.id}`);
+      this.$router.push(`deliverOrderList?str_id=${str.id}`);
     },
     // 删除订单
     handleDeleteOrder(str) {
-      // console.log(str);
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
+          deleteOrder({ id: str.id })
+            .then((res) => {
+              console.log(res);
+              if (res.code == 200) {
+                this.$message({
+                  type: "success",
+                  message: "删除成功!",
+                });
+              }
+            })
+            .catch((rej) => {
+              console.log(rej);
+            });
         })
         .catch(() => {
           this.$message({

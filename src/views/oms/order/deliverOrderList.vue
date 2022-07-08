@@ -26,7 +26,7 @@
                 v-for="item in options"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value"
+                :value="item.label"
               >
               </el-option>
             </el-select>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="delive-foot">
-      <el-button @click="cancel">取消</el-button>
+      <el-button @click="cancel">重置</el-button>
       <el-button type="primary" @click="isDelive">确定</el-button>
     </div>
   </div>
@@ -109,17 +109,24 @@ export default {
     },
     // 是否确认发货
     isDelive() {
+      let data = Object.assign(this.deliveList[0], { status: 2 });
+      console.log(data);
       this.$confirm("是否确认发货", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
-        .then((res) => {
-          this.$message({
-            type: "success",
-            message: "发货成功!",
+        .then(() => {
+          updateOrder(data).then((res) => {
+            console.log(res);
+            if (res.code == 200) {
+              this.$message({
+                type: "success",
+                message: "发货成功!",
+              });
+              this.$router.push(`/oms/order`);
+            }
           });
-          this.$router.push(`/oms/order`);
         })
         .catch(() => {
           this.$message({
@@ -128,17 +135,16 @@ export default {
           });
         });
     },
-    // 返回上一页
+    // 重置
     cancel() {
-      // for (let item of this.deliverList) {
-      //   this.$set(item, "ecp", "");
-      //   this.$set(item, "postid", "");
-      // }
-      this.$router.back();
+      // console.log(this.deliveList);
+      let obj = this.deliveList;
+      for (let item in obj) {
+        this.$set(obj[item], "ecp", "");
+        this.$set(obj[item], "postid", "");
+      }
+      // this.$router.back();
     },
-  },
-  watch: {
-    
   },
 };
 </script>

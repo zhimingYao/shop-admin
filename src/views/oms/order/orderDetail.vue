@@ -2,18 +2,10 @@
   <div class="order-detail">
     <div class="el-sreps">
       <el-steps :active="status + 1" align-center>
-        <el-step
-          title="提交订单"
-        ></el-step>
-        <el-step
-          title="支付订单"
-        ></el-step>
-        <el-step
-          title="平台发货"
-        ></el-step>
-        <el-step
-          title="确认收货"
-        ></el-step>
+        <el-step title="提交订单"></el-step>
+        <el-step title="支付订单"></el-step>
+        <el-step title="平台发货"></el-step>
+        <el-step title="确认收货"></el-step>
       </el-steps>
     </div>
     <el-card class="el-card" shadow="never">
@@ -27,7 +19,7 @@
           <span v-show="status == 3">已完成</span>
         </div>
         <div class="card-button" v-if="status == 1">
-          <el-button size="mini">订单发货</el-button>
+          <el-button size="mini" @click="handleDeliverOrder">订单发货</el-button>
         </div>
         <div class="card-button" v-if="status == 2">
           <el-button size="mini">订单跟踪</el-button>
@@ -49,9 +41,10 @@
           <el-col :span="8" class="table-cell-title">支付方式</el-col>
         </el-row>
         <el-row>
-          <!-- {{order.id}} {{order.code}} {{order.payment_type|formatPayment|formatNudefined}} -->
           <el-col :span="8" class="table-cell">{{ orderId }}</el-col>
-          <el-col :span="8" class="table-cell">{{ tableData_1.code||'数据错误' }}</el-col>
+          <el-col :span="8" class="table-cell">{{
+            tableData_1.code || "数据错误"
+          }}</el-col>
           <el-col
             :span="8"
             class="table-cell"
@@ -72,8 +65,8 @@
         </el-row>
         <el-row>
           <!-- {{order.ecp|formatNudefined}}  {{order.postid|formatNudefined}}-->
-          <el-col :span="8" class="table-cell">2</el-col>
-          <el-col :span="8" class="table-cell">2</el-col>
+          <el-col :span="8" class="table-cell">{{tableData_1.ecp||'暂无'}}</el-col>
+          <el-col :span="8" class="table-cell">{{tableData_1.postid||'暂无'}}</el-col>
           <el-col :span="8" class="table-cell">15天</el-col>
         </el-row>
       </div>
@@ -90,10 +83,14 @@
           <el-col :span="8" class="table-cell-title">收货地址</el-col>
         </el-row>
         <el-row>
-          <el-col :span="8" class="table-cell">{{ tableData_1.name||'数据错误' }}</el-col>
-          <el-col :span="8" class="table-cell">{{ tableData_1.tel||'数据错误' }}</el-col>
           <el-col :span="8" class="table-cell">{{
-            tableData_1.address||'数据错误'
+            tableData_1.name || "数据错误"
+          }}</el-col>
+          <el-col :span="8" class="table-cell">{{
+            tableData_1.tel || "数据错误"
+          }}</el-col>
+          <el-col :span="8" class="table-cell">{{
+            tableData_1.address || "数据错误"
           }}</el-col>
         </el-row>
       </div>
@@ -133,14 +130,16 @@
             >￥{{ item.num * item.price }}</el-col
           >
         </el-row>
-        <el-row style="margin-top:20px;text-align: right;padding-right: 5px;">合计: ￥{{combined}}</el-row>
+        <el-row style="margin-top: 20px; text-align: right; padding-right: 5px"
+          >合计: ￥{{ combined }}</el-row
+        >
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
-import { getOrderDetail } from "@/api/order";
+import { getOrderDetail, deleteOrder,updateOrder } from "@/api/order";
 export default {
   name: "Detail",
   data() {
@@ -149,7 +148,7 @@ export default {
       tableData: [],
       orderId: null,
       shopItem: [],
-      combined:0
+      combined: 0,
     };
   },
   created() {
@@ -165,10 +164,10 @@ export default {
       let data = { order_id, status };
       getOrderDetail(data)
         .then((res) => {
-          // console.log(res.data.sku);
+          // console.log(res.data);
           this.tableData.push(res.data);
           this.shopItem.push(res.data.skus);
-          console.log(this.shopItem);
+          // console.log(this.shopItem);
         })
         .catch((req) => {
           console.log(req);
@@ -176,18 +175,27 @@ export default {
     },
     // 删除订单
     handleDeleteOrder(str) {
-      // console.log(str);
+      console.log(str);
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
-          this.$router.push(`/oms/order`);
+          deleteOrder({ id: this.orderId })
+            .then((res) => {
+              console.log(res);
+              if (res.code == 200) {
+                this.$message({
+                  type: "success",
+                  message: "删除成功!",
+                });
+                this.$router.push(`/oms/order`);
+              }
+            })
+            .catch((rej) => {
+              console.log(rej);
+            });
         })
         .catch(() => {
           this.$message({
@@ -196,22 +204,58 @@ export default {
           });
         });
     },
+    // 是否确认发货
+    handleDeliverOrder() {
+      let str =this.tableData[0]
+      console.log(str);
+      // this.$store.dispatch("order/getDeliveList", str);
+      this.$router.push(`deliverOrderList?str_id=${str.id}`);
+      // this.$router.push(`deliverOrderList/${str.id}`);
+    },
+    // isDelive() {
+    //   console.log(this.tableData);
+    //   // let data = Object.assign(this.deliveList[0], { status: 2 });
+    //   // console.log(data);
+    //   // this.$confirm("是否确认发货", "提示", {
+    //   //   confirmButtonText: "确定",
+    //   //   cancelButtonText: "取消",
+    //   //   type: "warning",
+    //   // })
+    //   //   .then(() => {
+    //   //     updateOrder(data).then((res) => {
+    //   //       console.log(res);
+    //   //       if (res.code == 200) {
+    //   //         this.$message({
+    //   //           type: "success",
+    //   //           message: "发货成功!",
+    //   //         });
+    //   //         this.$router.push(`/oms/order`);
+    //   //       }
+    //   //     });
+    //   //   })
+    //   //   .catch(() => {
+    //   //     this.$message({
+    //   //       type: "info",
+    //   //       message: "已取消发货",
+    //   //     });
+    //   //   });
+    // },
   },
   computed: {
     tableData_1() {
       let res = this.tableData[0] || {};
       return res;
     },
-    shopItem_(){
-      let res = this.shopItem[0] || []
-      res.filter(item=>{
-        item.imgs=JSON.parse(item.imgs)
+    shopItem_() {
+      let res = this.shopItem[0] || [];
+      res.filter((item) => {
+        item.imgs = JSON.parse(item.imgs);
         // return item
-        this.combined += item.price * item.num
-      })
-      console.log(res);
-      return res
-    }
+        this.combined += item.price * item.num;
+      });
+      // console.log(res);
+      return res;
+    },
   },
 };
 </script>
@@ -276,7 +320,7 @@ export default {
         text-align: center;
         overflow: hidden;
         position: relative;
-        img{
+        img {
           position: absolute;
           top: 0px;
           left: 30%;
@@ -287,7 +331,7 @@ export default {
     }
   }
 }
-.font-small{
+.font-small {
   padding-left: 5px;
 }
 </style>
