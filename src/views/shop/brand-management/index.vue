@@ -63,8 +63,9 @@ export default {
     },
     // 渲染页面
     getBrands() {
+      // console.log(this.$store.state.user.id);
       getBrands({ store_id: this.$store.state.user.id }).then((res) => {
-        // console.log(res);
+        console.log(res);
         this.tableData = res.data;
       }).catch((err)=>{
         console.log(err);

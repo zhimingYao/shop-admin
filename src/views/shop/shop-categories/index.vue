@@ -15,11 +15,8 @@
     <div class="form">
       <el-dialog title="提示" :visible.sync="dialogFormVisible">
         <el-form>
-          <el-form-item label="" :label-width="formLabelWidth">
-            <el-select placeholder="请选择一级分类" v-model="category_id">
-              <el-option v-for="(item, index) in addParentNameArr" :value="item.id" :key="index" :label="item.name">
-                {{ item.name }}</el-option>
-            </el-select>
+          <el-form-item label="新增商品类别" :label-width="formLabelWidth">
+            <el-input v-model="category_id"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -30,19 +27,19 @@
     </div>
     <div class="table">
       <template>
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="date" label="编号" width="380">
+        <el-table :data="tableData" border="" style="width: 100%">
+          <el-table-column prop="id" label="编号" width="280">
           </el-table-column>
-          <el-table-column prop="name" label="分类名称" width="380">
+          <el-table-column prop="name" label="分类名称" width="280">
           </el-table-column>
-          <el-table-column label="设置" width="280">
+          <el-table-column label="设置" >
             <template slot-scope="scope">
-              <el-button size="mini" @click="getMenu(scope.row)">查看下级</el-button>
+              <el-button size="mini" @click="getSecond(scope.row)">查看下级</el-button>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="280">
+          <el-table-column label="操作" >
             <template slot-scope="scope">
-              <el-button type="danger" size="mini" @click="deleteProductType(scope.$index, scope.row)">删除</el-button>
+              <el-button type="danger" size="mini" @click="deleteProductType(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -53,7 +50,7 @@
 </template>
 
 <script>
-import { getMenu, addParent, selectParentNameNUll, deleteProduct } from '@/api/menu'
+import { getMenu,getSecond, addParent, selectParentNameNUll, deleteProduct } from '@/api/menu'
 export default {
   name: 'ShopCategories',
 
@@ -61,23 +58,12 @@ export default {
     return {
       // 表单是否展示
       dialogFormVisible: false,
-
       formLabelWidth: "120",
       // 表格数据
-      tableData: [
-        //   {
-        //   date: '1',
-        //   name: '衣服',
-        //   address: '上海市普陀区金沙江路 1518 弄'
-        // }, {
-        //   date: '2',
-        //   name: '鞋帽',
-        //   address: '上海市普陀区金沙江路 1516 弄'
-        // }
-      ],
+      tableData: [],
       // 获取到的分类
       addParentNameArr: [],
-      category_id: [],
+      category_id: "",
     };
   },
   created() {
@@ -87,7 +73,6 @@ export default {
   mounted() {
 
   },
-
   methods: {
     // 点击添加，表单显示
     addFirstCategories() {
@@ -107,20 +92,26 @@ export default {
       })
     },
     // 获取二级品类
-    getMenu(row) {
+    getSecond(row){
       this.$router.push({
         path: "/shop/productSecondMenu",
-        query: {
-          parent_name: row.name,
-          id: row.id
-        }
+        query: row,
       });
+    },
+    getMenu() {
+      let data = {
+        store_id:this.$store.state.user.id
+      }
+      getMenu(data).then(res=>{
+        // console.log(res);
+        this.tableData = res.data
+      })
     },
     // 添加品类
     addParent() {
       addParent({
         store_id: this.$store.state.user.id,
-        category_id: this.category_id
+        name: this.category_id
       }).then(res => {
         if (res.code == 200) {
           this.dialogVisible = false

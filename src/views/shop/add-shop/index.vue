@@ -45,7 +45,7 @@
               </div>
             </el-upload>
             <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
+              <img width="100%" :src="form.img" alt="">
             </el-dialog>
           </div>
         </div>
@@ -73,7 +73,6 @@ import { getCateGory, addSpu } from '@/api/shop.js'
 
 export default {
   name: 'AddShop',
-
   data() {
     return {
       form: {
@@ -157,11 +156,12 @@ export default {
       // 获取品牌名
     },
     // 上传图片函数
-    handleRemove(file) {
-      console.log(file);
+    handleRemove(file,fileList) {
+      console.log(file,fileList);
     },
-    handlePictureCardPreview(file) {
+    handlePictureCardPreview(res,file) {
       this.dialogImageUrl = file.url;
+      // console.log(file.url);
       this.dialogVisible = true;
     },
     handleDownload(file) {

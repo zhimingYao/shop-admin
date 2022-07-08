@@ -9,6 +9,15 @@ export function getMenu(data) {
   });
 }
 
+/* 获取二级分类 */
+export function getSecond(data) {
+  return http({
+    url:"/wares/getSecond",
+    method:"post",
+    data,
+  })
+}
+
 // 添加品类
 // 参数category_id, store_id
 export function addParent(data) {
